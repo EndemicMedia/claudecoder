@@ -1,2 +1,96 @@
-# claudecoder
-Automatically process pull requests using AWS Bedrock and Claude 3.5 to suggest code changes
+# ClaudeCoder
+
+ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.5 to suggest code changes. It analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
+
+## Features
+
+- Automatically analyzes pull requests and suggests code changes
+- Utilizes AWS Bedrock with Claude 3.5 for intelligent code analysis
+- Handles large responses with multi-part processing
+- Respects `.gitignore` rules when analyzing repository content
+- Commits suggested changes directly to the pull request branch
+- Provides detailed comments on pull requests with suggested changes
+
+## Prerequisites
+
+Before you can use ClaudeCoder, you need to have:
+
+1. An AWS account with access to AWS Bedrock
+2. AWS credentials (Access Key ID and Secret Access Key) with permissions to invoke AWS Bedrock
+3. A GitHub repository where you want to use this action
+
+## Setup
+
+1. Add the following secrets to your GitHub repository:
+   - `AWS_ACCESS_KEY_ID`: Your AWS Access Key ID
+   - `AWS_SECRET_ACCESS_KEY`: Your AWS Secret Access Key
+
+2. Create a workflow file (e.g., `.github/workflows/claudecoder.yml`) in your repository with the following content:
+
+```yaml
+name: ClaudeCoder
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  process-pr:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: your-github-username/claudecoder@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1  # or your preferred AWS region
+```
+
+## Usage
+
+Once set up, ClaudeCoder will automatically run on every new pull request or when a pull request is edited. It will:
+
+1. Analyze the repository content and the pull request description
+2. Generate code suggestions using Claude 3.5
+3. Apply the suggested changes to the pull request branch
+4. Add a comment to the pull request with a summary of the changes
+
+No additional action is required from the user after setup.
+
+## Configuration
+
+You can configure ClaudeCoder using the following inputs in your workflow file:
+
+- `aws-region`: The AWS region to use (default: `us-east-1`)
+- `max-requests`: Maximum number of requests to make to AWS Bedrock (default: `10`)
+- `max-content-size`: Maximum size of repository content to send to AWS Bedrock in bytes (default: `500000`)
+
+Example with custom configuration:
+
+```yaml
+- uses: your-github-username/claudecoder@v1
+  with:
+    aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    aws-region: eu-west-1
+    max-requests: 15
+    max-content-size: 750000
+```
+
+## Limitations
+
+- ClaudeCoder is designed to suggest changes, but it's important to review all suggestions before merging.
+- The action is limited by the capabilities of Claude 3.5 and may not understand very complex or domain-specific code patterns.
+- There's a limit to the amount of repository content that can be analyzed due to API constraints.
+
+## Contributing
+
+Contributions to ClaudeCoder are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you encounter any problems or have any questions about ClaudeCoder, please open an issue in this repository.
+
