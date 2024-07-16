@@ -1,8 +1,3 @@
-# Name of website
-title: ClaudeCoder Github Action
-
-# Your name to show in the footer
-author: dseeker
-
-theme: jekyll-theme-chirpy
-
+remote_theme: pages-themes/midnight@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
