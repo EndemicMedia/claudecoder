@@ -1,8 +1,8 @@
-name: ClaudeCoder
+name: ClaudeCoderAction
 description: "A simple GitHub Action written in JavaScript"
 branding:
-  icon: "clipboard"
-  color: yellow
+  icon: "cpu"
+  color: orange
 inputs:
   greeting:
     description: "Custom media type in the Accept header"
