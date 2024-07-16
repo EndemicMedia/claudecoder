@@ -1,45 +1,16 @@
-name: 'AWS Bedrock PR Processor'
-description: 'Automatically process pull requests using AWS Bedrock and Claude 3.5 to suggest code changes'
-author: 'Your Name or Organization'
-inputs:
-  aws-access-key-id:
-    description: 'AWS Access Key ID'
-    required: true
-  aws-secret-access-key:
-    description: 'AWS Secret Access Key'
-    required: true
-  aws-region:
-    description: 'AWS Region'
-    required: true
-    default: 'us-east-1'
-  max-requests:
-    description: 'Maximum number of requests to make to AWS Bedrock'
-    required: false
-    default: '10'
-  max-content-size:
-    description: 'Maximum size of repository content to send to AWS Bedrock (in bytes)'
-    required: false
-    default: '500000'
-runs:
-  using: 'composite'
-  steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-    - uses: actions/setup-node@v3
-      with:
-        node-version: '16'
-    - run: npm install @aws-sdk/client-bedrock-runtime @octokit/rest ignore
-      shell: bash
-    - run: ${{ github.action_path }}/process-pr.js
-      shell: node
-      env:
-        AWS_ACCESS_KEY_ID: ${{ inputs.aws-access-key-id }}
-        AWS_SECRET_ACCESS_KEY: ${{ inputs.aws-secret-access-key }}
-        AWS_DEFAULT_REGION: ${{ inputs.aws-region }}
-        MAX_REQUESTS: ${{ inputs.max-requests }}
-        MAX_CONTENT_SIZE: ${{ inputs.max-content-size }}
-        GITHUB_TOKEN: ${{ github.token }}
+name: ClaudeCoder
+description: "A simple GitHub Action written in JavaScript"
 branding:
-  icon: 'git-pull-request'
-  color: 'blue'
+  icon: "clipboard"
+  color: yellow
+inputs:
+  greeting:
+    description: "Custom media type in the Accept header"
+    required: false
+    default: "world"
+outputs:
+  greeting:
+    description: "The full greeting text"
+runs:
+  using: "node20"
+  main: "dist/index.js"

@@ -1,0 +1,43 @@
+{
+  "name": "claude-coder-action",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A GitHub Action for Claude Coder",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "vite build"
+  },
+  "repository": "github:EndemicMedia/claude-coder-action",
+  "keywords": [
+    "github-action"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.0"
+  },
+  "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "vite": "^4.3.9",
+    "semantic-release": "^21.0.5"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "dist/index.js"
+          ],
+          "message": "build(release): compiled action for ${nextRelease.version}\n\n[skip ci]"
+        }
+      ],
+      "@semantic-release/github"
+    ]
+  }
+}
