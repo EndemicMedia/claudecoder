@@ -11,7 +11,7 @@
     "minor": "npm --no-git-tag-version version minor",
     "major": "npm --no-git-tag-version version minor"
   },
-  "repository": "github:yourusername/claude-coder-action",
+  "repository": "github:EndemicMedia/claudecoder",
   "keywords": [
     "github-action"
   ],
