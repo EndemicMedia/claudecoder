@@ -86,6 +86,7 @@ async function main() {
           core.error(`Invalid content markers for file: ${filePath}`);
           continue;
         }
+        console.log('command', command);
         const content = claudeResponse.slice(contentStart + 6, contentEnd).trim();
         
         await octokit.rest.repos.createOrUpdateFileContents({
@@ -96,6 +97,7 @@ async function main() {
           content: Buffer.from(content).toString('base64'),
           branch: pullRequest.head.ref,
         });
+        console.log('createOrUpdateFileContents', filePath);
         core.info(`Updated ${filePath}`);
       }
     }
