@@ -1,8 +1,8 @@
 {
   "name": "claude-coder-action",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
-  "description": "A GitHub Action for Claude Coder",
+  "description": "A GitHub Action to Process Pull Requests using AWS Bedrock and Claude 3.5",
   "main": "dist/index.js",
   "scripts": {
     "build": "esbuild index.js --bundle --platform=node --target=node20 --outfile=dist/index.js",
@@ -15,10 +15,15 @@
   "keywords": [
     "github-action"
   ],
-  "author": "Your Name",
+  "author": "dseeker",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "@aws-sdk/client-bedrock-runtime": "3.614.0",
+    "@octokit/rest": "^19.0.13",
+    "axios": "^1.7.2",
+    "ignore": "^5.2.4"
   },
   "devDependencies": {
     "@semantic-release/git": "^10.0.1",

@@ -1,16 +1,22 @@
 name: ClaudeCoderAction
-description: "A simple GitHub Action written in JavaScript"
+description: 'Process pull requests using AWS Bedrock and Claude 3.5 Sonnet to suggest code changes'
 branding:
   icon: "cpu"
   color: orange
 inputs:
-  greeting:
-    description: "Custom media type in the Accept header"
+  github-token:
+    description: 'GitHub token'
+    required: true
+  aws-access-key-id:
+    description: 'AWS Access Key ID'
+    required: true
+  aws-secret-access-key:
+    description: 'AWS Secret Access Key'
+    required: true
+  aws-region:
+    description: 'AWS Region'
     required: false
-    default: "world"
-outputs:
-  greeting:
-    description: "The full greeting text"
+    default: 'us-east-1'
 runs:
   using: "node20"
   main: "dist/index.js"
