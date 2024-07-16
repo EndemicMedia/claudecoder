@@ -4,12 +4,11 @@ ClaudeCoder is a GitHub Action that automatically processes pull requests using 
 
 ## Features
 
-- Automatically analyzes pull requests and suggests code changes
+- Automatically analyzes pull requests and suggests code changes based on the pull request description
 - Utilizes AWS Bedrock with Claude 3.5 for intelligent code analysis
 - Handles large responses with multi-part processing
 - Respects `.gitignore` rules when analyzing repository content
 - Commits suggested changes directly to the pull request branch
-- Provides detailed comments on pull requests with suggested changes
 
 ## Prerequisites
 

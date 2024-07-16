@@ -1,6 +1,6 @@
 {
   "name": "claude-coder-action",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "A GitHub Action for Claude Coder",
   "main": "dist/index.js",
