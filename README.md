@@ -32,16 +32,22 @@ name: ClaudeCoder
 on:
   pull_request:
     types: [opened, edited]
+  pull_request_review_comment:
+    types: [created, edited]
+  issue_comment:
+    types: [created, edited]
 
 jobs:
   process-pr:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
-    - uses: your-github-username/claudecoder@v1
+    - name: ClaudeCoderAction
+      uses: EndemicMedia/claudecoder@v1.1.0
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1  # or your preferred AWS region
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Usage
@@ -61,7 +67,6 @@ You can configure ClaudeCoder using the following inputs in your workflow file:
 
 - `aws-region`: The AWS region to use (default: `us-east-1`)
 - `max-requests`: Maximum number of requests to make to AWS Bedrock (default: `10`)
-- `max-content-size`: Maximum size of repository content to send to AWS Bedrock in bytes (default: `500000`)
 
 Example with custom configuration:
 
@@ -71,8 +76,7 @@ Example with custom configuration:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     aws-region: eu-west-1
-    max-requests: 15
-    max-content-size: 750000
+    max-requests: 3
 ```
 
 ## Limitations
