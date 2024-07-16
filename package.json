@@ -1,6 +1,6 @@
 {
   "name": "claude-coder-action",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "private": true,
   "description": "A GitHub Action to Process Pull Requests using AWS Bedrock and Claude 3.5",
   "main": "dist/index.js",
