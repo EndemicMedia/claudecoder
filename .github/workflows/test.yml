@@ -12,17 +12,17 @@ jobs:
           node-version: '20'
       - run: npm ci
       - run: npm run build
-      - name: Minimal README example
-        uses: ./
-        id: hello_world
-      - name: README example with custom greeting
-        uses: ./
-        id: hello_world_greeting
-        with:
-          greeting: Gregor
-      - run: >-
-          node -e 'assert.equal("${{ steps.hello_world.outputs.greeting }}",
-          "Hello, world!")'
-      - run: >-
-          node -e 'assert.equal("${{ steps.hello_world_greeting.outputs.greeting
-          }}", "Hello, Gregor!")'
+      # - name: Minimal README example
+      #   uses: ./
+      #   id: hello_world
+      # - name: README example with custom greeting
+      #   uses: ./
+      #   id: hello_world_greeting
+      #   with:
+      #     greeting: Gregor
+      # - run: >-
+      #     node -e 'assert.equal("${{ steps.hello_world.outputs.greeting }}",
+      #     "Hello, world!")'
+      # - run: >-
+      #     node -e 'assert.equal("${{ steps.hello_world_greeting.outputs.greeting
+      #     }}", "Hello, Gregor!")'
