@@ -1,12 +1,11 @@
 {
   "name": "claude-coder-action",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "A GitHub Action for Claude Coder",
   "main": "dist/index.js",
-  "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "esbuild index.js --bundle --platform=node --target=node20 --outfile=dist/index.js",
     "test": "node dist/index.js",
     "patch": "npm --no-git-tag-version version patch",
     "minor": "npm --no-git-tag-version version minor",
@@ -23,7 +22,7 @@
   },
   "devDependencies": {
     "@semantic-release/git": "^10.0.1",
-    "vite": "^4.3.9",
+    "esbuild": "^0.17.19",
     "semantic-release": "^21.0.5"
   },
   "release": {

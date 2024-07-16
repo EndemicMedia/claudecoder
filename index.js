@@ -1,9 +1,16 @@
-const core = require("@actions/core");
+const core = require('@actions/core');
 
-const greeting = core.getInput("greeting");
-const output = `Hello, ${greeting}!`;
+function run() {
+  try {
+    const greeting = core.getInput('greeting');
+    const output = `Hello, ${greeting}!`;
 
-core.info(output);
+    core.info(output);
+    core.debug(`Using Node ${process.version}`);
+    core.setOutput("greeting", output);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+}
 
-core.debug(`Using Node ${process.version}`);
-core.setOutput("greeting", output);
+run();
