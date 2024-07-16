@@ -15,7 +15,7 @@ title: ClaudeCoder Github Action
 # Your name to show in the footer
 author: dseeker
 
-theme: jekyll-theme-minimal
+theme: jekyll-theme-chirpy
 
 ###############################################
 # --- List of links in the navigation bar --- #
