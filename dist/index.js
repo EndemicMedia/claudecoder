@@ -45450,14 +45450,36 @@ ${pullRequest.body}`;
         }
         console.log("command", command);
         const content = claudeResponse.slice(contentStart + 6, contentEnd).trim();
-        await octokit.rest.repos.createOrUpdateFileContents({
-          owner,
-          repo,
-          path: filePath,
-          message: `Apply changes suggested by Claude 3.5`,
-          content: Buffer.from(content).toString("base64"),
-          branch: pullRequest.head.ref
-        });
+        try {
+          const { data: fileData } = await octokit.rest.repos.getContent({
+            owner,
+            repo,
+            path: filePath,
+            ref: pullRequest.head.ref
+          });
+          await octokit.rest.repos.createOrUpdateFileContents({
+            owner,
+            repo,
+            path: filePath,
+            message: `Apply changes suggested by Claude 3.5`,
+            content: Buffer.from(content).toString("base64"),
+            sha: fileData.sha,
+            branch: pullRequest.head.ref
+          });
+        } catch (error) {
+          if (error.status === 404) {
+            await octokit.rest.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path: filePath,
+              message: `Create file suggested by Claude 3.5`,
+              content: Buffer.from(content).toString("base64"),
+              branch: pullRequest.head.ref
+            });
+          } else {
+            throw error;
+          }
+        }
         console.log("createOrUpdateFileContents", filePath);
         core.info(`Updated ${filePath}`);
       }
