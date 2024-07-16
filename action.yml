@@ -4,9 +4,6 @@ branding:
   icon: "cpu"
   color: orange
 inputs:
-  github-token:
-    description: 'GitHub token'
-    required: true
   aws-access-key-id:
     description: 'AWS Access Key ID'
     required: true
@@ -17,6 +14,9 @@ inputs:
     description: 'AWS Region'
     required: false
     default: 'us-east-1'
+  github-token:
+    description: 'GitHub token'
+    required: false
 runs:
   using: "node20"
   main: "dist/index.js"
