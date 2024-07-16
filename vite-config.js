@@ -11,8 +11,17 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['@actions/core'],
+      output: {
+        format: 'cjs',
+        exports: 'auto',
+      },
     },
     minify: false,
     sourcemap: true,
+    // Ensure the build output is compatible with Node.js
+    target: 'node20',
+    outDir: 'dist',
   },
+  // Prevent Vite from doing HTML-related work
+  appType: 'custom',
 });

@@ -1,13 +1,18 @@
 {
   "name": "claude-coder-action",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "A GitHub Action for Claude Coder",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "test": "node dist/index.js",
+    "patch": "npm --no-git-tag-version version patch",
+    "minor": "npm --no-git-tag-version version minor",
+    "major": "npm --no-git-tag-version version minor"
   },
-  "repository": "github:EndemicMedia/claude-coder-action",
+  "repository": "github:yourusername/claude-coder-action",
   "keywords": [
     "github-action"
   ],
