@@ -11,12 +11,12 @@ function minifyContent(content) {
 
 async function main() {
   try {
-    const token = core.getInput('github-token', { required: true });
+    const token = core.getInput('github-token', { required: false });
     const octokit = github.getOctokit(token);
 
     const awsAccessKeyId = core.getInput('aws-access-key-id', { required: true });
     const awsSecretAccessKey = core.getInput('aws-secret-access-key', { required: true });
-    const awsRegion = core.getInput('aws-region', { required: true });
+    const awsRegion = core.getInput('aws-region', { required: false });
 
     const bedrock = new BedrockClient(awsRegion, awsAccessKeyId, awsSecretAccessKey);
 
