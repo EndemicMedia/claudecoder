@@ -45361,6 +45361,7 @@ var require_utils6 = __commonJS({
         }
       }
       try {
+        console.log("->process.cwd()", process.cwd());
         await readDir(process.cwd());
         core2.info(`Retrieved content for ${Object.keys(content).length} files`);
       } catch (error) {
