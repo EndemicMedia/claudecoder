@@ -45347,9 +45347,11 @@ var require_utils6 = __commonJS({
           if (ig.ignores(relativePath))
             continue;
           if (entry.isDirectory()) {
+            console.log("-> entry directory", fullpath);
             await readDir(fullPath);
           } else {
             try {
+              console.log("-> entry file", fullpath);
               const fileContent = await fs.readFile(fullPath, "utf8");
               content[relativePath] = fileContent;
             } catch (error) {
