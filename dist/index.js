@@ -45347,7 +45347,7 @@ var require_utils6 = __commonJS({
           if (ig.ignores(relativePath))
             continue;
           if (entry.isDirectory()) {
-            console.log("-> entry directory", fullpath);
+            console.log("-> entry directory", fullPath);
             await readDir(fullPath);
           } else {
             try {
