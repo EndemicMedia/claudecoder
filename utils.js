@@ -20,7 +20,7 @@ async function getRepositoryContent() {
         await readDir(fullPath);
       } else {
         try {
-          console.log('-> entry file', fullpath)
+          console.log('-> entry file', fullPath)
           const fileContent = await fs.readFile(fullPath, 'utf8');
           content[relativePath] = fileContent;
         } catch (error) {
