@@ -31,6 +31,7 @@ async function getRepositoryContent() {
   }
 
   try {
+    console.log('->process.cwd()', process.cwd())
     await readDir(process.cwd());
     core.info(`Retrieved content for ${Object.keys(content).length} files`);
   } catch (error) {
