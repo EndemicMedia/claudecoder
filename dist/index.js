@@ -45351,7 +45351,7 @@ var require_utils6 = __commonJS({
             await readDir(fullPath);
           } else {
             try {
-              console.log("-> entry file", fullpath);
+              console.log("-> entry file", fullPath);
               const fileContent = await fs.readFile(fullPath, "utf8");
               content[relativePath] = fileContent;
             } catch (error) {
