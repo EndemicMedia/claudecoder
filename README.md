@@ -42,6 +42,7 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: ClaudeCoderAction
       uses: EndemicMedia/claudecoder@v1.1.0
       with:
