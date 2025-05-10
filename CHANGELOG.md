@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Modernized GitHub Pages website with improved design and graphics
 - New SVG illustrations for code review, bug fixing, and refactoring examples
 - Interactive JavaScript for smoother page scrolling and visual effects
+- GitHub Sponsors support via FUNDING.yml configuration
 
 ### Changed
 - Updated website style to be more responsive and mobile-friendly
