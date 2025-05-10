@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New SVG illustrations for code review, bug fixing, and refactoring examples
 - Interactive JavaScript for smoother page scrolling and visual effects
 - GitHub Sponsors support via FUNDING.yml configuration
+- Enhanced README with beautiful header, additional badges, and sponsorship information
+- Improved documentation presentation with matching styles and badges
 
 ### Changed
 - Updated website style to be more responsive and mobile-friendly

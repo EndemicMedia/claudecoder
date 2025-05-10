@@ -4,22 +4,31 @@ title: ClaudeCoder Documentation
 description: Technical documentation and setup guide for the ClaudeCoder GitHub Action
 ---
 
-# ClaudeCoder Documentation
+<div class="header-section">
+  <img src="../assets/images/logo-placeholder.svg" alt="ClaudeCoder Logo" class="logo" width="150" height="150">
+  <h1>ClaudeCoder Documentation</h1>
+  <p class="badges">
+    <a href="https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml"><img src="https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml/badge.svg" alt="Test Status"></a>
+    <a href="https://github.com/EndemicMedia/claudecoder/releases"><img src="https://img.shields.io/github/v/release/EndemicMedia/claudecoder" alt="Latest Release"></a>
+    <a href="https://github.com/EndemicMedia/claudecoder/blob/main/LICENSE"><img src="https://img.shields.io/github/license/EndemicMedia/claudecoder" alt="License"></a>
+    <a href="https://github.com/sponsors/EndemicMedia"><img src="https://img.shields.io/badge/Sponsor-♥-ff69b4" alt="Sponsor"></a>
+  </p>
+</div>
 
-## Overview
+## 🚀 Overview
 
 ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 Sonnet to suggest code changes. It analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
 
-### Key Features
+### ✨ Key Features
 
-- Automatically analyzes pull requests and suggests code changes based on the pull request description
-- Utilizes AWS Bedrock with Claude 3.7 Sonnet for intelligent code analysis
-- Handles large responses with multi-part processing
-- Respects `.gitignore` rules when analyzing repository content
-- Commits suggested changes directly to the pull request branch
-- Processes only pull requests with the "claudecoder" label (configurable)
+- 🤖 **AI-Powered Code Changes** - Harness Claude 3.7 Sonnet's intelligence to analyze PR descriptions and automatically implement suggested changes
+- 🔄 **Seamless GitHub Integration** - Works directly within your existing GitHub workflow with zero disruption to your development process
+- 🛠️ **Highly Configurable** - Customize token limits, thinking capabilities, response handling, and more to fit your team's specific needs
+- 🔍 **Context-Aware** - Analyzes your entire repository to ensure changes align with your existing codebase
+- 🚀 **Accelerated Development** - Save time on routine code changes and let your team focus on strategic work
+- 🔒 **Security-Focused** - Your code stays within your own GitHub and AWS environments
 
-### Prerequisites
+### 📋 Prerequisites
 
 Before you can use ClaudeCoder, you need to have:
 
@@ -27,7 +36,7 @@ Before you can use ClaudeCoder, you need to have:
 2. AWS credentials (Access Key ID and Secret Access Key) with permissions to invoke AWS Bedrock
 3. A GitHub repository where you want to use this action
 
-## Setup Guide
+## 🛠️ Setup Guide
 
 1. **Add the following secrets to your GitHub repository:**
    - `AWS_ACCESS_KEY_ID`: Your AWS Access Key ID
@@ -65,7 +74,7 @@ jobs:
         required-label: claudecoder
 ```
 
-## Configuration Options
+## ⚙️ Configuration Options
 
 You can configure ClaudeCoder using the following inputs in your workflow file:
 
@@ -100,7 +109,7 @@ You can configure ClaudeCoder using the following inputs in your workflow file:
     required-label: 'ai-review' # Custom label
 ```
 
-## Usage
+## 🚀 Usage
 
 ClaudeCoder will automatically run on pull requests that have the "claudecoder" label. It will:
 
@@ -115,7 +124,7 @@ To use ClaudeCoder on a pull request:
 2. Add the "claudecoder" label to the PR
 3. Wait for ClaudeCoder to process the PR and suggest changes
 
-## Label Filtering Options
+## 🏷️ Label Filtering Options
 
 You can implement label filtering in two ways:
 
@@ -129,13 +138,13 @@ You can implement label filtering in two ways:
 
 We recommend using both approaches for optimal efficiency and user experience.
 
-## Limitations
+## ⚠️ Limitations
 
 - ClaudeCoder is designed to suggest changes, but it's important to review all suggestions before merging.
 - The action is limited by the capabilities of Claude 3.7 Sonnet and may not understand very complex or domain-specific code patterns.
 - There's a limit to the amount of repository content that can be analyzed due to API constraints.
 
-## Contributing
+## 👥 Contributing
 
 Contributions to ClaudeCoder are welcome! Please see [CONTRIBUTING.md](https://github.com/EndemicMedia/claudecoder/blob/main/CONTRIBUTING.md) for guidelines on commit messages, pull requests, and our development workflow.
 
@@ -167,10 +176,22 @@ run-tests.bat
 
 All pull requests are automatically tested using GitHub Actions.
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/EndemicMedia/claudecoder/blob/main/LICENSE) file for details.
 
-## Support
+## ❤️ Support
 
-If you encounter any problems or have any questions about ClaudeCoder, please open an issue in this repository.
+If you find ClaudeCoder valuable, please consider supporting the project:
+
+<div class="sponsor-section">
+  <a href="https://github.com/sponsors/EndemicMedia">
+    <img src="https://img.shields.io/badge/Sponsor-Support%20Our%20Work-ff69b4?style=for-the-badge&logo=githubsponsors" alt="Sponsor via GitHub Sponsors" width="250" />
+  </a>
+</div>
+
+Your support helps us maintain and improve ClaudeCoder. Every contribution makes a difference!
+
+## 💬 Community
+
+If you encounter any problems or have any questions about ClaudeCoder, please open an issue in the [GitHub repository](https://github.com/EndemicMedia/claudecoder/issues). We're here to help!

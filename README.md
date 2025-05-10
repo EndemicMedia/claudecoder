@@ -1,19 +1,49 @@
-# ClaudeCoder
+<p align="center">
+  <img src="docs/assets/images/logo-placeholder.svg" alt="ClaudeCoder Logo" width="200" height="200">
+</p>
 
-[![Test Status](https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml/badge.svg)](https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml)
- 
+<h1 align="center">ClaudeCoder</h1>
+
+<p align="center">
+  <b>AI-powered code changes directly in your GitHub workflow</b>
+</p>
+
+<p align="center">
+  <a href="https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml"><img src="https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml/badge.svg" alt="Test Status"></a>
+  <a href="https://github.com/EndemicMedia/claudecoder/releases"><img src="https://img.shields.io/github/v/release/EndemicMedia/claudecoder" alt="Latest Release"></a>
+  <a href="https://github.com/EndemicMedia/claudecoder/blob/main/LICENSE"><img src="https://img.shields.io/github/license/EndemicMedia/claudecoder" alt="License"></a>
+  <a href="https://github.com/EndemicMedia/claudecoder/stargazers"><img src="https://img.shields.io/github/stars/EndemicMedia/claudecoder" alt="GitHub Stars"></a>
+  <a href="https://github.com/sponsors/EndemicMedia"><img src="https://img.shields.io/badge/Sponsor-♥-ff69b4" alt="Sponsor"></a>
+  <a href="https://github.com/EndemicMedia/claudecoder/actions/workflows/release.yml"><img src="https://github.com/EndemicMedia/claudecoder/actions/workflows/release.yml/badge.svg" alt="Release Status"></a>
+  <a href="https://github.com/EndemicMedia/claudecoder/network/members"><img src="https://img.shields.io/github/forks/EndemicMedia/claudecoder" alt="Forks"></a>
+</p>
+
+<p align="center">
+  <b>Turn PR feedback into code instantly using Claude 3.7 Sonnet</b>
+</p>
+
+---
+
+## 🚀 Overview
+
 ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 Sonnet to suggest code changes. It analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
 
-## Features
+<p align="center">
+  <a href="https://github.com/EndemicMedia/claudecoder" class="btn primary">Get Started</a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/sponsors/EndemicMedia" class="btn secondary">❤️ Sponsor</a>
+</p>
 
-- Automatically analyzes pull requests and suggests code changes based on the pull request description
-- Utilizes AWS Bedrock with Claude 3.7 Sonnet for intelligent code analysis
-- Handles large responses with multi-part processing
-- Respects `.gitignore` rules when analyzing repository content
-- Commits suggested changes directly to the pull request branch
-- Processes only pull requests with the "claudecoder" label (configurable)
+## ✨ Features
 
-## Prerequisites
+- 🤖 **AI-Powered Code Changes** - Harness Claude 3.7 Sonnet's intelligence to analyze PR descriptions and automatically implement suggested changes
+- 🔄 **Seamless GitHub Integration** - Works directly within your existing GitHub workflow with zero disruption to your development process
+- 🛠️ **Highly Configurable** - Customize token limits, thinking capabilities, response handling, and more to fit your team's specific needs
+- 🔍 **Context-Aware** - Analyzes your entire repository to ensure changes align with your existing codebase
+- 🚀 **Accelerated Development** - Save time on routine code changes and let your team focus on strategic work
+- 🔒 **Security-Focused** - Your code stays within your own GitHub and AWS environments
+
+## 📋 Prerequisites
 
 Before you can use ClaudeCoder, you need to have:
 
@@ -21,7 +51,7 @@ Before you can use ClaudeCoder, you need to have:
 2. AWS credentials (Access Key ID and Secret Access Key) with permissions to invoke AWS Bedrock
 3. A GitHub repository where you want to use this action
 
-## Setup
+## 🛠️ Setup
 
 1. Add the following secrets to your GitHub repository:
    - `AWS_ACCESS_KEY_ID`: Your AWS Access Key ID
@@ -59,7 +89,7 @@ jobs:
         required-label: 'claudecoder'
 ```
 
-## Usage
+## 🚀 Usage
 
 ClaudeCoder will automatically run on pull requests that have the "claudecoder" label. It will:
 
@@ -74,7 +104,7 @@ To use ClaudeCoder on a pull request:
 2. Add the "claudecoder" label to the PR
 3. Wait for ClaudeCoder to process the PR and suggest changes
 
-## Configuration
+## ⚙️ Configuration
 
 You can configure ClaudeCoder using the following inputs in your workflow file:
 
@@ -107,7 +137,7 @@ Example with custom configuration:
     required-label: 'ai-review' # Custom label
 ```
 
-## Label Filtering Options
+## 🏷️ Label Filtering Options
 
 You can implement label filtering in two ways:
 
@@ -121,22 +151,45 @@ You can implement label filtering in two ways:
 
 We recommend using both approaches for optimal efficiency and user experience.
 
-## Limitations
+## ⚠️ Limitations
 
 - ClaudeCoder is designed to suggest changes, but it's important to review all suggestions before merging.
 - The action is limited by the capabilities of Claude 3.7 Sonnet and may not understand very complex or domain-specific code patterns.
 - There's a limit to the amount of repository content that can be analyzed due to API constraints.
 
-## Contributing
+## 👥 Contributing
 
 Contributions to ClaudeCoder are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on commit messages, pull requests, and our development workflow.
 
 This project follows [Conventional Commits](https://www.conventionalcommits.org/) and uses semantic-release for automated versioning.
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## ❤️ Support
 
-If you encounter any problems or have any questions about ClaudeCoder, please open an issue in this repository.
+If you find ClaudeCoder valuable, please consider supporting the project:
+
+<p align="center">
+  <a href="https://github.com/sponsors/EndemicMedia"><img src="https://img.shields.io/badge/Sponsor-Support%20Our%20Work-ff69b4?style=for-the-badge&logo=githubsponsors" alt="Sponsor via GitHub Sponsors" width="250" /></a>
+</p>
+
+Your support helps us maintain and improve ClaudeCoder. Every contribution makes a difference!
+
+## 💬 Community
+
+If you encounter any problems or have any questions about ClaudeCoder, please open an issue in this repository. We're here to help!
+
+## 🔗 Related Projects
+
+Check out these other awesome AI-powered developer tools:
+
+- [GitHub Copilot](https://github.com/features/copilot) - AI pair programming
+- [AWS Bedrock](https://aws.amazon.com/bedrock/) - Foundation models for AI applications
+
+---
+
+<p align="center">
+  <sub>Built with ❤️ by <a href="https://github.com/EndemicMedia">EndemicMedia</a></sub>
+</p>
