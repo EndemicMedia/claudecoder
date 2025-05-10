@@ -44853,7 +44853,7 @@ var require_bedrock_client = __commonJS({
       constructor(region, accessKeyId, secretAccessKey, options = {}) {
         this.maxTokens = options.maxTokens || 64e3;
         this.enableThinking = options.enableThinking !== void 0 ? options.enableThinking : true;
-        this.thinkingBudget = options.thinkingBudget || 1e3;
+        this.thinkingBudget = options.thinkingBudget || 1024;
         this.extendedOutput = options.extendedOutput !== void 0 ? options.extendedOutput : true;
         this.requestTimeout = options.requestTimeout || 36e5;
         this.client = new BedrockRuntimeClient({
