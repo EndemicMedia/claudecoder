@@ -16,15 +16,18 @@ jest.mock('path', () => ({
   relative: jest.fn((base, full) => full.replace(`${base}/`, ''))
 }));
 
+// Mock the ignore module directly
 jest.mock('ignore', () => {
-  return jest.fn().mockImplementation(() => ({
+  const mockIgnoreInstance = {
     add: jest.fn().mockReturnThis(),
     ignores: jest.fn(path => {
       const ignoredPaths = ['.git', 'node_modules', '.github', 'package-lock.json', 
                            'bedrock-client.js', 'github-client.js', 'pr-processor.js', 'utils.js'];
       return ignoredPaths.some(ignorePath => path.includes(ignorePath));
     })
-  }));
+  };
+  
+  return jest.fn().mockReturnValue(mockIgnoreInstance);
 });
 
 // Mock for process.cwd()
