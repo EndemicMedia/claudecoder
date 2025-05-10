@@ -10,7 +10,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
   </div>
   <h1>Turn PR feedback into code instantly</h1>
   <p>ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 Sonnet to generate and implement intelligent code changes.</p>
-  <a href="https://github.com/EndemicMedia/claudecoder" class="btn primary">View on GitHub</a>
+  <a href="https://github.com/marketplace/actions/claudecoderaction" class="btn">Get Started with ClaudeCoder</a>
   <a href="#quickstart" class="btn secondary">Quick Start</a>
 </div>
 
@@ -78,7 +78,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
 <div class="cta-section">
   <h2>Ready to supercharge your development workflow?</h2>
   <p>Start using ClaudeCoder today and let AI handle the implementation details while your team focuses on what matters.</p>
-  <a href="https://github.com/EndemicMedia/claudecoder" class="btn">Get Started with ClaudeCoder</a>
+  <a href="https://github.com/EndemicMedia/claudecoder" class="btn primary">View on GitHub</a>
 </div>
 
 <div id="quickstart" class="setup-section">
