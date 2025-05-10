@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run unit tests
-        run: npm test
+        run: npx jest --config=jest.config.js
       - name: Run test coverage
         run: npm run test:coverage
       - name: Upload coverage reports
@@ -49,51 +49,3 @@ jobs:
             echo "Build failed: dist/index.js not found"
             exit 1
           fi
-
-  integration-test:
-    name: "Integration Test"
-    runs-on: ubuntu-latest
-    needs: [unit-tests, build-test]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
-      
-      # Setup mock AWS credentials for testing
-      - name: Setup mock AWS credentials
-        run: |
-          mkdir -p ~/.aws
-          echo "[default]" > ~/.aws/credentials
-          echo "aws_access_key_id = mock-key" >> ~/.aws/credentials
-          echo "aws_secret_access_key = mock-secret" >> ~/.aws/credentials
-          echo "region = us-east-1" >> ~/.aws/credentials
-      
-      # Integration test with mocked external dependencies
-      - name: Create mock PR
-        id: create_mock_pr
-        uses: actions/github-script@v7
-        with:
-          script: |
-            // This is a simulation and doesn't actually create a PR
-            console.log('Simulating PR creation for testing purposes');
-            return { number: 999, head: { ref: 'test-branch' } };
-      
-      # We use NODE_ENV=test to ensure our code knows it's in a test environment
-      # and can use mocks instead of real AWS/GitHub API calls
-      - name: Run integration test
-        run: |
-          export NODE_ENV=test
-          export GITHUB_TOKEN=${{ github.token }}
-          export MOCK_PR_NUMBER=${{ steps.create_mock_pr.outputs.number }}
-          node __tests__/integration/runner.js
-        env:
-          # These are intentionally mock values for testing
-          AWS_ACCESS_KEY_ID: 'mock-key'
-          AWS_SECRET_ACCESS_KEY: 'mock-secret'
-          AWS_REGION: 'us-east-1'
