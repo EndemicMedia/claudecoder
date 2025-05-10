@@ -44850,12 +44850,21 @@ var require_bedrock_client = __commonJS({
     var core2 = require_core();
     var { BedrockRuntimeClient, InvokeModelCommand } = require_dist_cjs60();
     var BedrockClient2 = class {
-      constructor(region, accessKeyId, secretAccessKey) {
+      constructor(region, accessKeyId, secretAccessKey, options = {}) {
+        this.maxTokens = options.maxTokens || 64e3;
+        this.enableThinking = options.enableThinking !== void 0 ? options.enableThinking : true;
+        this.thinkingBudget = options.thinkingBudget || 1e3;
+        this.extendedOutput = options.extendedOutput !== void 0 ? options.extendedOutput : true;
+        this.requestTimeout = options.requestTimeout || 36e5;
         this.client = new BedrockRuntimeClient({
           region,
           credentials: {
             accessKeyId,
             secretAccessKey
+          },
+          // Use configurable timeout
+          requestHandler: {
+            requestTimeout: this.requestTimeout
           }
         });
       }
@@ -44889,17 +44898,35 @@ var require_bedrock_client = __commonJS({
           accept: "application/json",
           body: JSON.stringify({
             anthropic_version: "bedrock-2023-05-31",
-            max_tokens: 4e3,
+            anthropic_beta: this.extendedOutput ? ["output-128k-2025-02-19"] : [],
+            // Enable extended output length (beta) if configured
+            max_tokens: this.maxTokens,
+            // Use configurable max tokens
+            // Enable extended thinking for complex code analysis tasks
+            thinking: this.enableThinking ? {
+              type: "enabled",
+              budget_tokens: this.thinkingBudget
+              // Use configurable thinking budget
+            } : void 0,
             messages
           })
         });
         try {
           const response = await this.client.send(command);
           const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-          return responseBody.content[0].text;
+          let textContent = "";
+          for (const contentBlock of responseBody.content) {
+            if (contentBlock.type === "text") {
+              textContent += contentBlock.text;
+            }
+          }
+          return textContent || responseBody.content[0] && responseBody.content[0].text || "";
         } catch (error) {
-          if (retries > 0) {
-            core2.warning(`Bedrock API call failed. Retrying in 5 seconds...`);
+          if (error.name === "ValidationException" && error.message.includes("max_tokens")) {
+            core2.warning(`Token limit exceeded: ${error.message}`);
+            throw new Error(`Claude 3.7 Sonnet token limit exceeded. Try reducing the input or max_tokens: ${error.message}`);
+          } else if (retries > 0) {
+            core2.warning(`Bedrock API call failed. Retrying in 5 seconds... Error: ${error.message}`);
             await new Promise((resolve) => setTimeout(resolve, 5e3));
             return this.invokeBedrock(prompt, imageBase64, retries - 1);
           } else {
@@ -45381,7 +45408,6 @@ var core = require_core();
 var github = require_github();
 var { BedrockClient } = require_bedrock_client();
 var { getRepositoryContent } = require_utils6();
-var MAX_REQUESTS = 10;
 function minifyContent(content) {
   return content.replace(/\s+/g, " ").trim();
 }
@@ -45392,7 +45418,19 @@ async function main() {
     const awsAccessKeyId = core.getInput("aws-access-key-id", { required: true });
     const awsSecretAccessKey = core.getInput("aws-secret-access-key", { required: true });
     const awsRegion = core.getInput("aws-region", { required: true });
-    const bedrock = new BedrockClient(awsRegion, awsAccessKeyId, awsSecretAccessKey);
+    const maxTokens = parseInt(core.getInput("max-tokens") || "64000", 10);
+    const maxRequests = parseInt(core.getInput("max-requests") || "10", 10);
+    const enableThinking = core.getInput("enable-thinking") === "true";
+    const thinkingBudget = parseInt(core.getInput("thinking-budget") || "1000", 10);
+    const extendedOutput = core.getInput("extended-output") === "true";
+    const requestTimeout = parseInt(core.getInput("request-timeout") || "3600000", 10);
+    const bedrock = new BedrockClient(awsRegion, awsAccessKeyId, awsSecretAccessKey, {
+      maxTokens,
+      enableThinking,
+      thinkingBudget,
+      extendedOutput,
+      requestTimeout
+    });
     const context = github.context;
     const { owner, repo } = context.repo;
     const pull_number = context.payload.pull_request ? context.payload.pull_request.number : context.payload.issue.number;
@@ -45441,9 +45479,9 @@ ${pullRequest.body}`;
 
       Base branch: ${pullRequest.base.ref}
     `;
-    core.info("Sending initial request to Claude 3.7...");
-    const claudeResponse = await bedrock.getCompleteResponse(initialPrompt, null, MAX_REQUESTS);
-    core.info("Received complete response from Claude 3.7. Processing...");
+    core.info("Sending initial request to Claude 3.7 Sonnet...");
+    const claudeResponse = await bedrock.getCompleteResponse(initialPrompt, null, maxRequests);
+    core.info("Received complete response from Claude 3.7 Sonnet. Processing...");
     const commands = claudeResponse.split("\n").filter((cmd) => cmd.trim().startsWith("git"));
     for (const command of commands) {
       if (command.startsWith("git add")) {
@@ -45467,7 +45505,7 @@ ${pullRequest.body}`;
             owner,
             repo,
             path: filePath,
-            message: `Apply changes suggested by Claude 3.7`,
+            message: `Apply changes suggested by Claude 3.7 Sonnet`,
             content: Buffer.from(content).toString("base64"),
             sha: fileData.sha,
             branch: pullRequest.head.ref
@@ -45478,7 +45516,7 @@ ${pullRequest.body}`;
               owner,
               repo,
               path: filePath,
-              message: `Create file suggested by Claude 3.7`,
+              message: `Create file suggested by Claude 3.7 Sonnet`,
               content: Buffer.from(content).toString("base64"),
               branch: pullRequest.head.ref
             });
@@ -45500,7 +45538,7 @@ ${pullRequest.body}`;
         owner,
         repo,
         issue_number: pull_number,
-        body: "Changes suggested by Claude 3.7 have been applied to this PR based on the latest comment. Please review the changes."
+        body: "Changes suggested by Claude 3.7 Sonnet have been applied to this PR based on the latest comment. Please review the changes."
       });
     } else {
       core.info("No changes to commit.");
@@ -45508,7 +45546,7 @@ ${pullRequest.body}`;
         owner,
         repo,
         issue_number: pull_number,
-        body: "Claude 3.7 analyzed the latest comment and the repository content but did not suggest any changes."
+        body: "Claude 3.7 Sonnet analyzed the latest comment and the repository content but did not suggest any changes."
       });
     }
   } catch (error) {
