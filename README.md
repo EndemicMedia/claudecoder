@@ -88,7 +88,9 @@ Example with custom configuration:
 
 ## Contributing
 
-Contributions to ClaudeCoder are welcome! Please feel free to submit a Pull Request.
+Contributions to ClaudeCoder are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on commit messages, pull requests, and our development workflow.
+
+This project follows [Conventional Commits](https://www.conventionalcommits.org/) and uses semantic-release for automated versioning.
 
 ## License
 
