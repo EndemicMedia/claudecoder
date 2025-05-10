@@ -75,7 +75,7 @@ You can configure ClaudeCoder using the following inputs in your workflow file:
 ### Advanced Claude 3.7 Sonnet Configuration
 - `max-tokens`: Maximum number of tokens for Claude to generate (default: `64000`, up to 128K)
 - `enable-thinking`: Enable Claude's extended thinking capability (default: `true`)
-- `thinking-budget`: Token budget for Claude's thinking process (default: `1000`)
+- `thinking-budget`: Token budget for Claude's thinking process (default: `1024`, minimum required by the API)
 - `extended-output`: Enable 128K extended output capability (default: `true`)
 - `request-timeout`: API request timeout in milliseconds (default: `3600000` - 60 minutes)
 
@@ -114,4 +114,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 If you encounter any problems or have any questions about ClaudeCoder, please open an issue in this repository.
-
