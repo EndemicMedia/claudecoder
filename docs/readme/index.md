@@ -1,12 +1,12 @@
 ---
 layout: default
-title: ClaudeCoder Documentation
+title: ClaudeCoderAction Documentation
 description: Technical documentation and setup guide for the ClaudeCoder GitHub Action
 ---
 
 <div class="header-section">
   <img src="../assets/images/logo-placeholder.svg" alt="ClaudeCoder Logo" class="logo" width="150" height="150">
-  <h1>ClaudeCoder Documentation</h1>
+  <h1>ClaudeCoderAction Documentation</h1>
   <p class="badges">
     <a href="https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml"><img src="https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml/badge.svg" alt="Test Status"></a>
     <a href="https://github.com/EndemicMedia/claudecoder/releases"><img src="https://img.shields.io/github/v/release/EndemicMedia/claudecoder" alt="Latest Release"></a>
@@ -30,7 +30,7 @@ ClaudeCoder is a GitHub Action that automatically processes pull requests using 
 
 ### 📋 Prerequisites
 
-Before you can use ClaudeCoder, you need to have:
+Before you can use ClaudeCoderAction, you need to have:
 
 1. An AWS account with access to AWS Bedrock
 2. AWS credentials (Access Key ID and Secret Access Key) with permissions to invoke AWS Bedrock
@@ -76,7 +76,7 @@ jobs:
 
 ## ⚙️ Configuration Options
 
-You can configure ClaudeCoder using the following inputs in your workflow file:
+You can configure ClaudeCoderAction using the following inputs in your workflow file:
 
 ### Basic Configuration
 
@@ -111,7 +111,7 @@ You can configure ClaudeCoder using the following inputs in your workflow file:
 
 ## 🚀 Usage
 
-ClaudeCoder will automatically run on pull requests that have the "claudecoder" label. It will:
+ClaudeCoderAction will automatically run on pull requests that have the "claudecoder" label. It will:
 
 1. Verify that the PR has the required label (default: "claudecoder")
 2. Analyze the repository content and the pull request description
@@ -119,7 +119,7 @@ ClaudeCoder will automatically run on pull requests that have the "claudecoder" 
 4. Apply the suggested changes to the pull request branch
 5. Add a comment to the pull request with a summary of the changes
 
-To use ClaudeCoder on a pull request:
+To use ClaudeCoderAction on a pull request:
 1. Create or edit a pull request
 2. Add the "claudecoder" label to the PR
 3. Wait for ClaudeCoder to process the PR and suggest changes
@@ -140,17 +140,17 @@ We recommend using both approaches for optimal efficiency and user experience.
 
 ## ⚠️ Limitations
 
-- ClaudeCoder is designed to suggest changes, but it's important to review all suggestions before merging.
+- ClaudeCoderAction is designed to suggest changes, but it's important to review all suggestions before merging.
 - The action is limited by the capabilities of Claude 3.7 Sonnet and may not understand very complex or domain-specific code patterns.
 - There's a limit to the amount of repository content that can be analyzed due to API constraints.
 
 ## 👥 Contributing
 
-Contributions to ClaudeCoder are welcome! Please see [CONTRIBUTING.md](https://github.com/EndemicMedia/claudecoder/blob/main/CONTRIBUTING.md) for guidelines on commit messages, pull requests, and our development workflow.
+Contributions to ClaudeCoderAction are welcome! Please see [CONTRIBUTING.md](https://github.com/EndemicMedia/claudecoder/blob/main/CONTRIBUTING.md) for guidelines on commit messages, pull requests, and our development workflow.
 
 ### Testing
 
-ClaudeCoder includes a comprehensive test suite built with Jest. Tests cover:
+ClaudeCoderAction repository includes a comprehensive test suite built with Jest. Tests cover:
 
 - Unit tests for all components
 - Integration tests with mocked external dependencies
@@ -182,7 +182,7 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 ## ❤️ Support
 
-If you find ClaudeCoder valuable, please consider supporting the project:
+If you find ClaudeCoderAction valuable, please consider supporting the project:
 
 <div class="sponsor-section">
   <a href="https://github.com/sponsors/EndemicMedia">
@@ -190,8 +190,8 @@ If you find ClaudeCoder valuable, please consider supporting the project:
   </a>
 </div>
 
-Your support helps us maintain and improve ClaudeCoder. Every contribution makes a difference!
+Your support helps us maintain and improve ClaudeCoderAction. Every contribution makes a difference!
 
 ## 💬 Community
 
-If you encounter any problems or have any questions about ClaudeCoder, please open an issue in the [GitHub repository](https://github.com/EndemicMedia/claudecoder/issues). We're here to help!
+If you encounter any problems or have any questions about ClaudeCoderAction, please open an issue in the [GitHub repository](https://github.com/EndemicMedia/claudecoder/issues). We're here to help!

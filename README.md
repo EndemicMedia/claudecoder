@@ -2,7 +2,7 @@
   <img src="docs/assets/images/logo-placeholder.svg" alt="ClaudeCoder Logo" width="200" height="200">
 </p>
 
-<h1 align="center">ClaudeCoder</h1>
+<h1 align="center">ClaudeCoderAction</h1>
 
 <p align="center">
   <b>AI-powered code changes directly in your GitHub workflow</b>
@@ -14,7 +14,7 @@
   <a href="https://github.com/EndemicMedia/claudecoder/blob/main/LICENSE"><img src="https://img.shields.io/github/license/EndemicMedia/claudecoder" alt="License"></a>
   <a href="https://github.com/EndemicMedia/claudecoder/stargazers"><img src="https://img.shields.io/github/stars/EndemicMedia/claudecoder" alt="GitHub Stars"></a>
   <a href="https://github.com/sponsors/EndemicMedia"><img src="https://img.shields.io/badge/Sponsor-♥-ff69b4" alt="Sponsor"></a>
-  <a href="https://github.com/EndemicMedia/claudecoder/actions/workflows/release.yml"><img src="https://github.com/EndemicMedia/claudecoder/actions/workflows/release.yml/badge.svg" alt="Release Status"></a>
+  <a href="https://github.com/EndemicMedia/claudecoder/actions/workflows/release.yml"><img src="https://github.shields.io/github/actions/workflow/status/EndemicMedia/claudecoder/release.yml" alt="Release Status"></a>
   <a href="https://github.com/EndemicMedia/claudecoder/network/members"><img src="https://img.shields.io/github/forks/EndemicMedia/claudecoder" alt="Forks"></a>
 </p>
 
@@ -40,12 +40,12 @@ ClaudeCoder is a GitHub Action that automatically processes pull requests using 
 - 🔄 **Seamless GitHub Integration** - Works directly within your existing GitHub workflow with zero disruption to your development process
 - 🛠️ **Highly Configurable** - Customize token limits, thinking capabilities, response handling, and more to fit your team's specific needs
 - 🔍 **Context-Aware** - Analyzes your entire repository to ensure changes align with your existing codebase
-- 🚀 **Accelerated Development** - Save time on routine code changes and let your team focus on strategic work
+- **Accelerated Development** - Save time on routine code changes and let your team focus on strategic work
 - 🔒 **Security-Focused** - Your code stays within your own GitHub and AWS environments
 
 ## 📋 Prerequisites
 
-Before you can use ClaudeCoder, you need to have:
+Before you can use ClaudeCoderAction, you need to have:
 
 1. An AWS account with access to AWS Bedrock
 2. AWS credentials (Access Key ID and Secret Access Key) with permissions to invoke AWS Bedrock
@@ -89,9 +89,9 @@ jobs:
         required-label: 'claudecoder'
 ```
 
-## 🚀 Usage
+## Usage
 
-ClaudeCoder will automatically run on pull requests that have the "claudecoder" label. It will:
+ClaudeCoderAction will automatically run on pull requests that have the "claudecoder" label. It will:
 
 1. Verify that the PR has the required label (default: "claudecoder")
 2. Analyze the repository content and the pull request description
@@ -106,7 +106,7 @@ To use ClaudeCoder on a pull request:
 
 ## ⚙️ Configuration
 
-You can configure ClaudeCoder using the following inputs in your workflow file:
+You can configure ClaudeCoderAction using the following inputs in your workflow file:
 
 ### Basic Configuration
 - `aws-region`: The AWS region to use (default: `us-east-1`)
@@ -153,13 +153,13 @@ We recommend using both approaches for optimal efficiency and user experience.
 
 ## ⚠️ Limitations
 
-- ClaudeCoder is designed to suggest changes, but it's important to review all suggestions before merging.
+- ClaudeCoderAction is designed to suggest changes, but it's important to review all suggestions before merging.
 - The action is limited by the capabilities of Claude 3.7 Sonnet and may not understand very complex or domain-specific code patterns.
 - There's a limit to the amount of repository content that can be analyzed due to API constraints.
 
 ## 👥 Contributing
 
-Contributions to ClaudeCoder are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on commit messages, pull requests, and our development workflow.
+Contributions to ClaudeCoderAction are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on commit messages, pull requests, and our development workflow.
 
 This project follows [Conventional Commits](https://www.conventionalcommits.org/) and uses semantic-release for automated versioning.
 
@@ -169,17 +169,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## ❤️ Support
 
-If you find ClaudeCoder valuable, please consider supporting the project:
+If you find ClaudeCoderAction valuable, please consider supporting the project:
 
 <p align="center">
   <a href="https://github.com/sponsors/EndemicMedia"><img src="https://img.shields.io/badge/Sponsor-Support%20Our%20Work-ff69b4?style=for-the-badge&logo=githubsponsors" alt="Sponsor via GitHub Sponsors" width="250" /></a>
 </p>
 
-Your support helps us maintain and improve ClaudeCoder. Every contribution makes a difference!
+Your support helps us maintain and improve ClaudeCoderAction. Every contribution makes a difference!
 
 ## 💬 Community
 
-If you encounter any problems or have any questions about ClaudeCoder, please open an issue in this repository. We're here to help!
+If you encounter any problems or have any questions about ClaudeCoderAction, please open an issue in this repository. We're here to help!
 
 ## 🔗 Related Projects
 
