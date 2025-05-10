@@ -26,11 +26,11 @@ inputs:
     required: false
     default: '10'
   enable-thinking:
-    description: 'Enable Claude's extended thinking capability (true/false)'
+    description: 'Enable Claude''s extended thinking capability (true/false)'
     required: false
     default: 'true'
   thinking-budget:
-    description: 'Token budget for Claude's thinking process'
+    description: 'Token budget for Claude''s thinking process'
     required: false
     default: '1000'
   extended-output:
