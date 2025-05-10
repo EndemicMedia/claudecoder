@@ -26,6 +26,14 @@ This document outlines the planned features and enhancements for the ClaudeCoder
 - Evaluate the best architecture to get the commit message together with the code changes, without making a secondary request just for the commit message
 - Commit messages obey a .claudecoder stylefile with details on how the message is generated (example: - add emojis at the end; - use semver rules) etc
 
+### API Cost Tracking
+
+**Description:** Add API stats to the final PR message response, with details on the in/out tokens used, the cost and total context size utilized during the operation
+
+**Implementation Details:**
+- Use the API response structure to find information on the API cost and add it to the response message on the PR conversation
+
+
 ### Automatic Model Selection
 
 **Description:** ClaudeCoder will automatically select from Haiku or Sonnet based on the complexity of the task to save on API calls

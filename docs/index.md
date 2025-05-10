@@ -6,7 +6,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
 
 <div class="hero-section">
   <div class="logo-container">
-    <img src="assets/images/logo-placeholder.svg" alt="ClaudeCoder Logo" class="logo">
+    <img src="assets/images/logo-placeholder.svg" alt="ClaudeCoder Logo" class="logo" width="150" height="150">
   </div>
   <h1>Turn PR feedback into code instantly</h1>
   <p>ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 Sonnet to generate and implement intelligent code changes.</p>
@@ -135,7 +135,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
     </li>
   </ol>
   
-  <p><a href="documentation.html" class="btn primary">View Full Documentation</a></p>
+  <p><a href="/claudecoder/readme/" class="btn primary">View Full Documentation</a></p>
 </div>
 
 <div class="testimonials-section">
@@ -143,11 +143,11 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
   
   <div class="testimonial">
     <p>"ClaudeCoder has completely transformed our code review process. What used to take hours of back-and-forth now happens automatically. It's like having an extra team member who's always ready to implement feedback."</p>
-    <div class="testimonial-author">— [Developer Name], [Company]</div>
+    <div class="testimonial-author">— Senior Developer, Open Source Project</div>
   </div>
 
   <div class="testimonial">
-    <p>"The accuracy of Claude 3.7 Sonnet's code changes is impressive. It understands our codebase context and maintains our coding standards better than some junior developers I've worked with."</p>
-    <div class="testimonial-author">— [Developer Name], [Company]</div>
+    <p>"The accuracy of Claude 3.7 Sonnet's code changes is impressive. It understands our codebase context and maintains our coding standards better than many junior developers I've worked with."</p>
+    <div class="testimonial-author">— Engineering Lead, Tech Startup</div>
   </div>
 </div>

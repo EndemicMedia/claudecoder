@@ -27,6 +27,28 @@ body {
   padding: 3rem 4rem;
   text-align: center;
   color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/claudecoder/assets/images/logo-placeholder.svg');
+  background-repeat: no-repeat;
+  background-position: right -100px center;
+  background-size: 350px 350px;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.page-header > * {
+  position: relative;
+  z-index: 2;
 }
 
 @media screen and (max-width: 42em) {
@@ -106,6 +128,8 @@ pre code {
   background-color: rgba(255, 255, 255, 0.08);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Improve contrast for accessibility */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 .btn:hover {
@@ -153,6 +177,7 @@ pre code {
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 3px solid var(--primary-color);
 }
 
 .feature-card:hover {
@@ -170,9 +195,13 @@ pre code {
 }
 
 .feature-card .feature-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
   color: var(--primary-color);
+  background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 @media screen and (max-width: 767px) {
@@ -196,6 +225,13 @@ pre code {
   padding: 1.5rem;
   background-color: var(--light-color);
   border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.use-case:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .use-case h3 {
@@ -215,13 +251,15 @@ pre code {
 .use-case-image {
   flex: 1 1 300px;
   min-height: 200px;
-  background-color: #e9ecef;
-  border-radius: 4px;
+  background-color: white;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #6c757d;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eaeaea;
 }
 
 .use-case-image img {
@@ -260,6 +298,7 @@ pre code {
   background-color: var(--primary-color);
   color: white;
   border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .cta-section h2 {
@@ -288,6 +327,7 @@ pre code {
 .logo {
   max-width: 200px;
   height: auto;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
 }
 
 /* Setup section */
@@ -296,6 +336,8 @@ pre code {
   padding: 2rem;
   background-color: var(--light-color);
   border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eaeaea;
 }
 
 .setup-section ol {
@@ -357,4 +399,10 @@ pre code {
   background-color: #f8f8f8;
   border-radius: 4px;
   padding: 1rem;
+}
+
+/* Disable download buttons in header */
+.page-header a.btn[href$=".zip"],
+.page-header a.btn[href$=".tar.gz"] {
+  display: none; /* Completely hide the buttons */
 }
