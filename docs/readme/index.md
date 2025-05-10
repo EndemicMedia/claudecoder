@@ -109,7 +109,7 @@ You can configure ClaudeCoderAction using the following inputs in your workflow 
     required-label: 'ai-review' # Custom label
 ```
 
-## 🚀 Usage
+## ▶️ Usage
 
 ClaudeCoderAction will automatically run on pull requests that have the "claudecoder" label. It will:
 

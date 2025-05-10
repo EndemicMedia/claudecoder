@@ -16,7 +16,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
 
 <div class="features-section">
   <div class="feature-card">
-    <div class="feature-icon"></div>
+    <div class="feature-icon">🤖</div>
     <h3>AI-Powered Code Changes</h3>
     <p>Harness Claude 3.7 Sonnet's intelligence to analyze PR descriptions and automatically implement suggested changes.</p>
   </div>

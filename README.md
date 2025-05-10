@@ -89,7 +89,7 @@ jobs:
         required-label: 'claudecoder'
 ```
 
-## Usage
+## ▶️ Usage
 
 ClaudeCoderAction will automatically run on pull requests that have the "claudecoder" label. It will:
 
