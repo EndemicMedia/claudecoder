@@ -1,107 +1,78 @@
 # Contributing to ClaudeCoder
 
-Thank you for your interest in contributing to ClaudeCoder! This document provides guidelines and information about contributing to this project.
+Thank you for your interest in contributing to ClaudeCoder! This document provides guidelines and instructions for contributing to this project.
 
-## Semantic Versioning and Commit Messages
+## Development Setup
 
-This project uses [semantic-release](https://github.com/semantic-release/semantic-release) for automated version management and package publishing. This means we follow the [Conventional Commits](https://www.conventionalcommits.org/) specification to automate versioning.
+1. Fork the repository
+2. Clone your fork: `git clone https://github.com/YOUR-USERNAME/claudecoder.git`
+3. Install dependencies: `npm ci`
+4. Build the action: `npm run build`
 
-### Commit Message Format
+## Testing
 
-Each commit message should follow this format:
+We use Jest for testing. To run the tests:
 
-```
-<type>(<scope>): <short description>
+```bash
+# Run all tests
+npm test
 
-<longer description>
+# Run tests with coverage
+npm run test:coverage
 
-<BREAKING CHANGE note if applicable>
-```
-
-#### Types
-
-- **feat**: A new feature
-- **fix**: A bug fix
-- **docs**: Documentation changes
-- **style**: Changes that don't affect code functionality (formatting, etc)
-- **refactor**: Code changes that neither fix bugs nor add features
-- **perf**: Code changes that improve performance
-- **test**: Adding or correcting tests
-- **chore**: Changes to build process or auxiliary tools
-
-#### Scope
-
-The scope is optional and represents the module your commit is working on (e.g., `model`, `client`, `action`).
-
-#### Breaking Changes
-
-If your commit includes a breaking change (a change that would cause users to update their configurations or usage), include `BREAKING CHANGE:` in the footer of your commit message:
-
-```
-feat(model): upgrade to newer AI model
-
-BREAKING CHANGE: The new model requires different configuration parameters
+# Run tests in watch mode during development
+npm run test:watch
 ```
 
-### Examples
+Please ensure that all tests pass before submitting a pull request, and add tests for any new functionality you introduce.
 
-#### Feature Addition
-```
-feat(model): add support for new parameter
-```
+## Commit Message Convention
 
-#### Bug Fix
-```
-fix(client): handle error response correctly
-```
+We follow [Conventional Commits](https://www.conventionalcommits.org/) for our commit messages. This enables automatic versioning and changelog generation. Please format your commit messages as follows:
 
-#### Documentation Update
 ```
-docs: improve setup instructions
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
 ```
 
-#### Breaking Change
-```
-feat(model): upgrade to Claude 3.7 Sonnet from 3.5
+### Types
 
-This commit upgrades the AI model from Claude 3.5 to Claude 3.7 Sonnet,
-which provides improved code analysis and suggestions.
+- `feat:` A new feature
+- `fix:` A bug fix
+- `docs:` Documentation only changes
+- `style:` Changes that do not affect the meaning of the code (formatting, etc)
+- `refactor:` Code changes that neither fix a bug nor add a feature
+- `perf:` Performance improvements
+- `test:` Adding missing tests or correcting existing tests
+- `build:` Changes to the build system or dependencies
+- `ci:` Changes to CI configuration files and scripts
+- `chore:` Other changes that don't modify src or test files
 
-BREAKING CHANGE: Changes the Bedrock model ID from 
-anthropic.claude-3-5-sonnet-20240620-v1:0 to 
-anthropic.claude-3-7-sonnet-20250219
-```
+Examples:
+- `feat(bedrock): add support for image attachments`
+- `fix(utils): correctly handle binary files`
+- `docs: update README with new example`
 
 ## Pull Request Process
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes following the commit message format
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Create a new branch for your feature or bug fix
+2. Make your changes
+3. Run tests and ensure they pass
+4. Update documentation if needed
+5. Submit a pull request to the `main` branch
+6. Ensure the PR description clearly describes the changes you've made
 
-## Development Workflow
+## Code of Conduct
 
-1. Clone the repository
-2. Install dependencies with `npm ci`
-3. Make your changes
-4. Test your changes with `npm run build` followed by `npm test`
-5. Commit and push your changes
+Please be respectful and constructive in your communication with other contributors. We aim to maintain a welcoming and inclusive community.
 
-## Versioning
+## Releasing
 
-When your PR is merged to `main`:
-
-1. The `semantic-release` GitHub Action automatically determines the next version number
-2. Based on commit messages, it will:
-   - Bump the patch version for `fix` type commits
-   - Bump the minor version for `feat` type commits
-   - Bump the major version for commits with `BREAKING CHANGE`
-3. A new GitHub release is created with appropriate tags
-4. The release notes are generated automatically
-
-**Important:** Do not manually modify the version in `package.json`. This will be handled automatically by the semantic-release process.
+This project uses semantic-release for automated versioning and releases. When commits are merged to the main branch, a new release will be created automatically if needed, based on the conventional commit messages.
 
 ## Questions?
 
-If you have any questions about contributing, please open an issue in the repository.
+If you have any questions or need help with the contribution process, please open an issue and we'll be happy to assist.
