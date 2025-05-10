@@ -9,6 +9,7 @@ ClaudeCoder is a GitHub Action that automatically processes pull requests using 
 - Handles large responses with multi-part processing
 - Respects `.gitignore` rules when analyzing repository content
 - Commits suggested changes directly to the pull request branch
+- Processes only pull requests with the "claudecoder" label (configurable)
 
 ## Prerequisites
 
@@ -31,7 +32,12 @@ name: ClaudeCoder
 
 on:
   pull_request:
-    types: [opened, edited]
+    types: [opened, edited, labeled]
+    # Only trigger on PRs with the 'claudecoder' label
+    # This is a recommended filter at the workflow level for efficiency
+    # The action will also check for this label as a safeguard
+    branches:
+      - main
   pull_request_review_comment:
     types: [created, edited]
   issue_comment:
@@ -42,24 +48,31 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: ClaudeCoderAction
-      uses: EndemicMedia/claudecoder@v1.1.0
+      uses: EndemicMedia/claudecoder@v2.0.0
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        # The following is optional - defaults to 'claudecoder'
+        required-label: 'claudecoder'
 ```
 
 ## Usage
 
-Once set up, ClaudeCoder will automatically run on every new pull request or when a pull request is edited. It will:
+ClaudeCoder will automatically run on pull requests that have the "claudecoder" label. It will:
 
-1. Analyze the repository content and the pull request description
-2. Generate code suggestions using Claude 3.7 Sonnet
-3. Apply the suggested changes to the pull request branch
-4. Add a comment to the pull request with a summary of the changes
+1. Verify that the PR has the required label (default: "claudecoder")
+2. Analyze the repository content and the pull request description
+3. Generate code suggestions using Claude 3.7 Sonnet
+4. Apply the suggested changes to the pull request branch
+5. Add a comment to the pull request with a summary of the changes
 
-No additional action is required from the user after setup.
+To use ClaudeCoder on a pull request:
+1. Create or edit a pull request
+2. Add the "claudecoder" label to the PR
+3. Wait for ClaudeCoder to process the PR and suggest changes
 
 ## Configuration
 
@@ -68,18 +81,19 @@ You can configure ClaudeCoder using the following inputs in your workflow file:
 ### Basic Configuration
 - `aws-region`: The AWS region to use (default: `us-east-1`)
 - `max-requests`: Maximum number of requests to make to AWS Bedrock (default: `10`)
+- `required-label`: Label required on PR for processing (default: `claudecoder`)
 
 ### Advanced Claude 3.7 Sonnet Configuration
 - `max-tokens`: Maximum number of tokens for Claude to generate (default: `64000`, up to 128K)
 - `enable-thinking`: Enable Claude's extended thinking capability (default: `true`)
-- `thinking-budget`: Token budget for Claude's thinking process (default: `1000`)
+- `thinking-budget`: Token budget for Claude's thinking process (default: `1024`, minimum required by the API)
 - `extended-output`: Enable 128K extended output capability (default: `true`)
 - `request-timeout`: API request timeout in milliseconds (default: `3600000` - 60 minutes)
 
 Example with custom configuration:
 
 ```yaml
-- uses: EndemicMedia/claudecoder@v1.3.0
+- uses: EndemicMedia/claudecoder@v2.0.0
   with:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -90,6 +104,7 @@ Example with custom configuration:
     thinking-budget: 2000
     extended-output: true
     request-timeout: 1800000
+    required-label: 'ai-review' # Custom label
 ```
 
 ## Limitations
