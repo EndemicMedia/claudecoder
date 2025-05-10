@@ -45421,9 +45421,10 @@ async function main() {
     const maxTokens = parseInt(core.getInput("max-tokens") || "64000", 10);
     const maxRequests = parseInt(core.getInput("max-requests") || "10", 10);
     const enableThinking = core.getInput("enable-thinking") === "true";
-    const thinkingBudget = parseInt(core.getInput("thinking-budget") || "1000", 10);
+    const thinkingBudget = parseInt(core.getInput("thinking-budget") || "1024", 10);
     const extendedOutput = core.getInput("extended-output") === "true";
     const requestTimeout = parseInt(core.getInput("request-timeout") || "3600000", 10);
+    const requiredLabel = core.getInput("required-label") || "claudecoder";
     const bedrock = new BedrockClient(awsRegion, awsAccessKeyId, awsSecretAccessKey, {
       maxTokens,
       enableThinking,
@@ -45440,6 +45441,20 @@ async function main() {
       repo,
       pull_number
     });
+    const hasRequiredLabel = pullRequest.labels.some(
+      (label) => label.name.toLowerCase() === requiredLabel.toLowerCase()
+    );
+    if (!hasRequiredLabel) {
+      core.info(`PR #${pull_number} does not have the required label '${requiredLabel}'. Skipping processing.`);
+      await octokit.rest.issues.createComment({
+        owner,
+        repo,
+        issue_number: pull_number,
+        body: `This PR was not processed by Claude 3.7 Sonnet because it doesn't have the required '${requiredLabel}' label. Add this label if you want AI assistance.`
+      });
+      return;
+    }
+    core.info(`PR #${pull_number} has the required label. Proceeding with processing...`);
     core.info("Fetching repository content...");
     const repoContent = await getRepositoryContent();
     const repoContentString = Object.entries(repoContent).map(([file, content]) => `File: ${file}
