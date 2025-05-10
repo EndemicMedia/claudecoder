@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved error handling for validation exceptions
 - Better handling of API timeouts for large responses
 - Updated model ID format to use the inference profile ID required for AWS Bedrock cross-region inference (`us.anthropic.claude-3-7-sonnet-20250219-v1:0`)
+- Updated default thinking budget from 1000 to 1024 tokens to meet Bedrock API minimum requirement
 
 ## [1.2.0] - 2025-05-10
 
