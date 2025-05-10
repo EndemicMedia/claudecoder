@@ -18,6 +18,15 @@ This document outlines the planned features and enhancements for the ClaudeCoder
 
 ## Features Roadmap
 
+### Automatic Model Selection
+
+**Description:** ClaudeCoder will automatically select from Haiku or Sonnet based on the complexity of the task to save on API calls
+
+**Implementation Details:**
+- Evaluate the code and user request first on Haiku, asking for a complexity estimate
+- Based on some industry standard complexity measurement, the model will either complete the request and answer what the user wants, or return an answer with the complexity score and requesting to ask to a smarter model.
+- Ask to respond with some parameter or keyword so its easy to apply a regex and detect if a new model request is needed
+
 ### Configurable Code Style Enforcement
 
 **Description:** Allow repository maintainers to configure code style preferences that ClaudeCoder will respect when suggesting changes. This will ensure that AI-generated code follows team conventions.
