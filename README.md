@@ -35,13 +35,6 @@ name: ClaudeCoder
 on:
   pull_request:
     types: [opened, edited, labeled]
-    # Only trigger on PRs with the 'claudecoder' label
-    # This is a recommended filter at the workflow level for efficiency
-    # The action will also check for this label as a safeguard
-    # If the workflow is triggered without the label, the action will skip processing
-    # and leave a comment informing the user to add the required label
-    branches:
-      - main
   pull_request_review_comment:
     types: [created, edited]
   issue_comment:
@@ -49,12 +42,15 @@ on:
 
 jobs:
   process-pr:
+    # Only run this job if the PR has the 'claudecoder' label
+    # This is a recommended filter at the workflow level for efficiency
+    if: contains(github.event.pull_request.labels.*.name, 'claudecoder')
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: ClaudeCoderAction
-      uses: EndemicMedia/claudecoder@v1.1.0
+      uses: EndemicMedia/claudecoder@v2.0.0
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -97,7 +93,7 @@ You can configure ClaudeCoder using the following inputs in your workflow file:
 Example with custom configuration:
 
 ```yaml
-- uses: EndemicMedia/claudecoder@v1.3.0
+- uses: EndemicMedia/claudecoder@v2.0.0
   with:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -110,6 +106,20 @@ Example with custom configuration:
     request-timeout: 1800000
     required-label: 'ai-review' # Custom label
 ```
+
+## Label Filtering Options
+
+You can implement label filtering in two ways:
+
+1. **Workflow-level filtering (recommended)**: Using the `if` condition in your workflow file as shown in the setup example:
+   ```yaml
+   if: contains(github.event.pull_request.labels.*.name, 'claudecoder')
+   ```
+   This prevents the job from running entirely when the label is not present, saving computational resources.
+
+2. **Action-level filtering (built-in)**: The action itself checks for the required label and exits gracefully if missing, adding a comment to inform users. This acts as a safety mechanism even if workflow-level filtering is not set up.
+
+We recommend using both approaches for optimal efficiency and user experience.
 
 ## Limitations
 
