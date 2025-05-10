@@ -1,0 +1,73 @@
+name: PR Test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - 'main'
+
+jobs:
+  test-claudecoder-on-pr:
+    name: "Test ClaudeCoder on current PR"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build action
+        run: npm run build
+        
+      # Check if AWS credentials secrets are available
+      - name: Check for AWS credentials
+        id: check-aws-creds
+        env:
+          AWS_KEY_AVAILABLE: ${{ secrets.AWS_ACCESS_KEY_ID != '' }}
+        run: |
+          if [ "$AWS_KEY_AVAILABLE" = "true" ]; then
+            echo "AWS credentials available"
+            echo "has_aws_creds=true" >> $GITHUB_OUTPUT
+          else
+            echo "AWS credentials not available in this context"
+            echo "has_aws_creds=false" >> $GITHUB_OUTPUT
+          fi
+          
+      # Run ClaudeCoder on its own PR (self-test)
+      # Only if AWS credentials are available
+      - name: Run ClaudeCoder on this PR
+        if: steps.check-aws-creds.outputs.has_aws_creds == 'true'
+        uses: ./
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          
+      # Post results comment  
+      - name: Post test results
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const awsCredsAvailable = '${{ steps.check-aws-creds.outputs.has_aws_creds }}' === 'true';
+            
+            let message;
+            if (awsCredsAvailable) {
+              message = '✅ ClaudeCoder self-test complete! This PR has been processed by the ClaudeCoder action itself.';
+            } else {
+              message = '⚠️ ClaudeCoder self-test skipped: AWS credentials not available in this context.\n\n' +
+                        'Note: For forks, secrets are not passed to workflows by default for security reasons.\n' +
+                        'The maintainer will need to run this test after reviewing the PR.';
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: message
+            });

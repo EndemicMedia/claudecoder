@@ -87,7 +87,35 @@ Example with custom configuration:
 
 ## Contributing
 
-Contributions to ClaudeCoder are welcome! Please feel free to submit a Pull Request.
+Contributions to ClaudeCoder are welcome! Please see [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines on commit messages, pull requests, and our development workflow.
+
+### Testing
+
+ClaudeCoder includes a comprehensive test suite built with Jest. Tests cover:
+
+- Unit tests for all components
+- Integration tests with mocked external dependencies
+- GitHub Actions workflow tests
+
+To run the tests locally:
+
+```bash
+# Install dependencies
+npm ci
+
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+```
+
+Windows users can use the provided batch file:
+```
+run-tests.bat
+```
+
+All pull requests are automatically tested using GitHub Actions.
 
 ## License
 

@@ -1,29 +1,51 @@
-"on":
-  - push
 name: Test
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - 'main'
+
 jobs:
-  readmeExamples:
-    name: "[TEST] README examples"
+  unit-tests:
+    name: "Unit Tests"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: '20'
-      - run: npm ci
-      - run: npm run build
-      # - name: Minimal README example
-      #   uses: ./
-      #   id: hello_world
-      # - name: README example with custom greeting
-      #   uses: ./
-      #   id: hello_world_greeting
-      #   with:
-      #     greeting: Gregor
-      # - run: >-
-      #     node -e 'assert.equal("${{ steps.hello_world.outputs.greeting }}",
-      #     "Hello, world!")'
-      # - run: >-
-      #     node -e 'assert.equal("${{ steps.hello_world_greeting.outputs.greeting
-      #     }}", "Hello, Gregor!")'
-      
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Run unit tests
+        run: npx jest --config=jest.config.js
+      - name: Run test coverage
+        run: npm run test:coverage
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+  build-test:
+    name: "Build Test"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Verify build
+        run: |
+          if [ ! -f "dist/index.js" ]; then
+            echo "Build failed: dist/index.js not found"
+            exit 1
+          fi

@@ -1,4 +1,6 @@
 # ClaudeCoder
+
+[![Test Status](https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml/badge.svg)](https://github.com/EndemicMedia/claudecoder/actions/workflows/test.yml)
  
 ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 Sonnet to suggest code changes. It analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
 
