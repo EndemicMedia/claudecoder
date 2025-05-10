@@ -401,8 +401,82 @@ pre code {
   padding: 1rem;
 }
 
-/* Disable download buttons in header */
+/* Support section styles */
+.support-section {
+  padding: 1rem 0;
+}
+
+.support-section h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--heading-color);
+  font-size: 1.4rem;
+}
+
+.support-section h4 {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.support-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.support-option {
+  flex: 1 1 300px;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 3px solid var(--primary-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.support-option:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.support-option ul {
+  padding-left: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.support-option li {
+  margin-bottom: 0.5rem;
+}
+
+.cta-mini {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.cta-mini .btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cta-mini .btn:hover {
+  background-color: #3a76d8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+}
+
+/* Disable download buttons and GitHub button in header */
 .page-header a.btn[href$=".zip"],
-.page-header a.btn[href$=".tar.gz"] {
+.page-header a.btn[href$=".tar.gz"],
+.page-header a.btn[href*="github.com/EndemicMedia/claudecoder"] {
   display: none; /* Completely hide the buttons */
 }

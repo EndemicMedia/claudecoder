@@ -139,15 +139,43 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
 </div>
 
 <div class="testimonials-section">
-  <h2>What Developers Say</h2>
+  <h2>Support the Future of Dev Productivity</h2>
   
-  <div class="testimonial">
-    <p>"ClaudeCoder has completely transformed our code review process. What used to take hours of back-and-forth now happens automatically. It's like having an extra team member who's always ready to implement feedback."</p>
-    <div class="testimonial-author">— Senior Developer, Open Source Project</div>
-  </div>
+  <div class="support-section">
+    <h3>Bridging Human Creativity and AI Implementation</h3>
+    <p>ClaudeCoder represents a new paradigm in developer workflows—where human creativity and strategic thinking combine with AI-powered implementation. Our small team of open-source contributors is dedicated to pushing this boundary further.</p>
+    
+    <p>As the relationship between developers and AI evolves, we're committed to creating tools that enhance human capabilities rather than replace them. With your support, we can continue refining this vision.</p>
 
-  <div class="testimonial">
-    <p>"The accuracy of Claude 3.7 Sonnet's code changes is impressive. It understands our codebase context and maintains our coding standards better than many junior developers I've worked with."</p>
-    <div class="testimonial-author">— Engineering Lead, Tech Startup</div>
+    <h3>Ways to Support Our Work</h3>
+    <div class="support-options">
+      <div class="support-option">
+        <h4>GitHub Sponsors</h4>
+        <p>Directly fund our development through <a href="https://github.com/sponsors/EndemicMedia" target="_blank">GitHub Sponsors</a>. Even $5/month helps us dedicate more time to improving ClaudeCoder.</p>
+      </div>
+      
+      <div class="support-option">
+        <h4>Try Our Recommended Tools</h4>
+        <p>We've tested dozens of AWS and developer tools. Support us by checking out these quality services through our affiliate links:</p>
+        <ul>
+          <li><a href="https://aws.amazon.com/bedrock/" target="_blank">AWS Bedrock</a> - The foundation of ClaudeCoder's AI capabilities</li>
+          <li><a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a> - Pair with ClaudeCoder for the ultimate AI coding experience</li>
+        </ul>
+      </div>
+      
+      <div class="support-option">
+        <h4>Contribute Code</h4>
+        <p>Help us improve! We welcome pull requests for <a href="https://github.com/EndemicMedia/claudecoder/blob/main/ROADMAP.md" target="_blank">roadmap features</a>, bug fixes, or documentation enhancements.</p>
+      </div>
+    </div>
+    
+    <h3>Building the Smart Development Ecosystem</h3>
+    <p>We believe the future belongs to developers who effectively partner with AI tools. ClaudeCoder is our contribution to this ecosystem—transforming how teams implement feedback and accelerate development cycles.</p>
+    
+    <p>Your support doesn't just fund a project; it helps shape a future where developers can focus on high-level problems while AI handles implementation details. Join us in making that vision a reality.</p>
+    
+    <div class="cta-mini">
+      <a href="https://github.com/sponsors/EndemicMedia" class="btn primary" target="_blank">Become a Sponsor</a>
+    </div>
   </div>
 </div>
