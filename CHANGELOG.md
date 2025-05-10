@@ -5,13 +5,13 @@ All notable changes to the ClaudeCoder project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0] - 2025-05-10
 
 ### Added
 - Support for configurable parameters through GitHub Action inputs:
   - `max-tokens`: Maximum number of tokens for Claude to generate (default: 64000)
   - `enable-thinking`: Enable Claude's extended thinking capability (default: true)
-  - `thinking-budget`: Token budget for Claude's thinking process (default: 1000)
+  - `thinking-budget`: Token budget for Claude's thinking process (default: 1024)
   - `extended-output`: Enable 128K extended output capability (default: true)
   - `request-timeout`: API request timeout in milliseconds (default: 3600000)
   - `max-requests`: Maximum number of requests to make to AWS Bedrock (default: 10)
@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Upgraded to Claude 3.7 Sonnet model from AWS Bedrock
 - Increased default max tokens from 4000 to 64000
-- Implemented extended thinking capability with a default budget of 1000 tokens
+- Implemented extended thinking capability with a default budget of 1024 tokens
 - Enabled extended output length (128K tokens) by default
 - Enhanced response processing to handle thinking blocks
 - Improved error handling for token validation errors
@@ -31,7 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved error handling for validation exceptions
 - Better handling of API timeouts for large responses
 - Updated model ID format to use the inference profile ID required for AWS Bedrock cross-region inference (`us.anthropic.claude-3-7-sonnet-20250219-v1:0`)
-- Updated default thinking budget from 1000 to 1024 tokens to meet Bedrock API minimum requirement
 
 ### BREAKING CHANGES
 - PRs now require a label (default: 'claudecoder') to be processed by the action
