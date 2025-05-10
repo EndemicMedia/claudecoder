@@ -8,6 +8,10 @@ class BedrockClient {
       credentials: {
         accessKeyId,
         secretAccessKey
+      },
+      // Increase timeout to 60 minutes (3600000 ms) as recommended for Claude 3.7 Sonnet
+      requestHandler: {
+        requestTimeout: 3600000
       }
     });
   }

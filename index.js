@@ -72,9 +72,9 @@ async function main() {
       Base branch: ${pullRequest.base.ref}
     `;
 
-    core.info("Sending initial request to Claude 3.7...");
+    core.info("Sending initial request to Claude 3.7 Sonnet...");
     const claudeResponse = await bedrock.getCompleteResponse(initialPrompt, null, MAX_REQUESTS);
-    core.info("Received complete response from Claude 3.7. Processing...");
+    core.info("Received complete response from Claude 3.7 Sonnet. Processing...");
 
     const commands = claudeResponse.split('\n').filter(cmd => cmd.trim().startsWith('git'));
     for (const command of commands) {
@@ -103,7 +103,7 @@ async function main() {
             owner,
             repo,
             path: filePath,
-            message: `Apply changes suggested by Claude 3.7`,
+            message: `Apply changes suggested by Claude 3.7 Sonnet`,
             content: Buffer.from(content).toString('base64'),
             sha: fileData.sha,
             branch: pullRequest.head.ref,
@@ -115,7 +115,7 @@ async function main() {
               owner,
               repo,
               path: filePath,
-              message: `Create file suggested by Claude 3.7`,
+              message: `Create file suggested by Claude 3.7 Sonnet`,
               content: Buffer.from(content).toString('base64'),
               branch: pullRequest.head.ref,
             });
@@ -140,7 +140,7 @@ async function main() {
         owner,
         repo,
         issue_number: pull_number,
-        body: "Changes suggested by Claude 3.7 have been applied to this PR based on the latest comment. Please review the changes.",
+        body: "Changes suggested by Claude 3.7 Sonnet have been applied to this PR based on the latest comment. Please review the changes.",
       });
     } else {
       core.info("No changes to commit.");
@@ -148,7 +148,7 @@ async function main() {
         owner,
         repo,
         issue_number: pull_number,
-        body: "Claude 3.7 analyzed the latest comment and the repository content but did not suggest any changes.",
+        body: "Claude 3.7 Sonnet analyzed the latest comment and the repository content but did not suggest any changes.",
       });
     }
   } catch (error) {
