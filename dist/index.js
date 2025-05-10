@@ -44884,7 +44884,7 @@ var require_bedrock_client = __commonJS({
       `
         });
         const command = new InvokeModelCommand({
-          modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0",
+          modelId: "anthropic.claude-3-7-sonnet-20250219",
           contentType: "application/json",
           accept: "application/json",
           body: JSON.stringify({
@@ -44926,6 +44926,9 @@ var require_bedrock_client = __commonJS({
           if (response.includes("END_OF_SUGGESTIONS")) {
             core2.info("Received end of suggestions signal.");
             break;
+          }
+          if (requestCount === 1 && !response.includes("git")) {
+            throw new Error("No valid git commands found in the response.");
           }
           const lastCompleteCommand = fullResponse.lastIndexOf("git");
           if (lastCompleteCommand === -1) {
@@ -45438,9 +45441,9 @@ ${pullRequest.body}`;
 
       Base branch: ${pullRequest.base.ref}
     `;
-    core.info("Sending initial request to Claude 3.5...");
+    core.info("Sending initial request to Claude 3.7...");
     const claudeResponse = await bedrock.getCompleteResponse(initialPrompt, null, MAX_REQUESTS);
-    core.info("Received complete response from Claude 3.5. Processing...");
+    core.info("Received complete response from Claude 3.7. Processing...");
     const commands = claudeResponse.split("\n").filter((cmd) => cmd.trim().startsWith("git"));
     for (const command of commands) {
       if (command.startsWith("git add")) {
@@ -45464,7 +45467,7 @@ ${pullRequest.body}`;
             owner,
             repo,
             path: filePath,
-            message: `Apply changes suggested by Claude 3.5`,
+            message: `Apply changes suggested by Claude 3.7`,
             content: Buffer.from(content).toString("base64"),
             sha: fileData.sha,
             branch: pullRequest.head.ref
@@ -45475,7 +45478,7 @@ ${pullRequest.body}`;
               owner,
               repo,
               path: filePath,
-              message: `Create file suggested by Claude 3.5`,
+              message: `Create file suggested by Claude 3.7`,
               content: Buffer.from(content).toString("base64"),
               branch: pullRequest.head.ref
             });
@@ -45497,7 +45500,7 @@ ${pullRequest.body}`;
         owner,
         repo,
         issue_number: pull_number,
-        body: "Changes suggested by Claude 3.5 have been applied to this PR based on the latest comment. Please review the changes."
+        body: "Changes suggested by Claude 3.7 have been applied to this PR based on the latest comment. Please review the changes."
       });
     } else {
       core.info("No changes to commit.");
@@ -45505,7 +45508,7 @@ ${pullRequest.body}`;
         owner,
         repo,
         issue_number: pull_number,
-        body: "Claude 3.5 analyzed the latest comment and the repository content but did not suggest any changes."
+        body: "Claude 3.7 analyzed the latest comment and the repository content but did not suggest any changes."
       });
     }
   } catch (error) {
