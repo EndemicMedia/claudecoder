@@ -51,7 +51,7 @@ class BedrockClient {
     });
 
     const command = new InvokeModelCommand({
-      modelId: "anthropic.claude-3-7-sonnet-20250219",
+      modelId: "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
       contentType: "application/json",
       accept: "application/json",
       body: JSON.stringify({ 
