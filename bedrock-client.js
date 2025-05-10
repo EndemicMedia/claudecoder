@@ -49,7 +49,13 @@ class BedrockClient {
       accept: "application/json",
       body: JSON.stringify({ 
         anthropic_version: "bedrock-2023-05-31",
-        max_tokens: 4000,
+        anthropic_beta: ["output-128k-2025-02-19"], // Enable extended output length (beta)
+        max_tokens: 16000, // Increased from 4000 to better utilize Claude 3.7 Sonnet's capabilities
+        // Enable extended thinking for complex code analysis tasks
+        thinking: {
+          type: "enabled",
+          budget_tokens: 8000 // Allocate budget for reasoning/thinking
+        },
         messages: messages
       })
     });
@@ -57,10 +63,29 @@ class BedrockClient {
     try {
       const response = await this.client.send(command);
       const responseBody = JSON.parse(new TextDecoder().decode(response.body));
-      return responseBody.content[0].text;
+      
+      // Improved response handling for Claude 3.7 Sonnet
+      // Check for thinking blocks and text content
+      let textContent = "";
+      for (const contentBlock of responseBody.content) {
+        if (contentBlock.type === "text") {
+          textContent += contentBlock.text;
+        }
+        // Store thinking blocks if needed for future multi-turn conversations
+        // else if (contentBlock.type === "thinking") {
+        //   this.lastThinking = contentBlock;
+        // }
+      }
+      
+      return textContent || (responseBody.content[0] && responseBody.content[0].text) || "";
     } catch (error) {
-      if (retries > 0) {
-        core.warning(`Bedrock API call failed. Retrying in 5 seconds...`);
+      // Enhanced error handling for Claude 3.7 Sonnet
+      if (error.name === 'ValidationException' && error.message.includes('max_tokens')) {
+        // Handle token limit exceeded errors
+        core.warning(`Token limit exceeded: ${error.message}`);
+        throw new Error(`Claude 3.7 Sonnet token limit exceeded. Try reducing the input or max_tokens: ${error.message}`);
+      } else if (retries > 0) {
+        core.warning(`Bedrock API call failed. Retrying in 5 seconds... Error: ${error.message}`);
         await new Promise(resolve => setTimeout(resolve, 5000));
         return this.invokeBedrock(prompt, imageBase64, retries - 1);
       } else {
