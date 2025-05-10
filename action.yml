@@ -30,9 +30,9 @@ inputs:
     required: false
     default: 'true'
   thinking-budget:
-    description: 'Token budget for Claude''s thinking process'
+    description: 'Token budget for Claude''s thinking process (minimum: 1024)'
     required: false
-    default: '1000'
+    default: '1024'
   extended-output:
     description: 'Enable 128K extended output capability (true/false)'
     required: false

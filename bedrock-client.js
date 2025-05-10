@@ -6,7 +6,7 @@ class BedrockClient {
     // Initialize configurable parameters with defaults
     this.maxTokens = options.maxTokens || 64000; // Maximum supported is 128K, default to 64K (GA limit)
     this.enableThinking = options.enableThinking !== undefined ? options.enableThinking : true;
-    this.thinkingBudget = options.thinkingBudget || 1000; // Default to 1000 tokens for thinking
+    this.thinkingBudget = options.thinkingBudget || 1024; // Default to 1024 tokens for thinking (API minimum)
     this.extendedOutput = options.extendedOutput !== undefined ? options.extendedOutput : true; // Enable 128K output by default
     this.requestTimeout = options.requestTimeout || 3600000; // Default to 60 minutes (3600000 ms)
 
