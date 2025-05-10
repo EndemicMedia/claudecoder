@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .logo-text { font-family: 'Arial', sans-serif; font-weight: bold; }
-    .primary { fill: #4a86e8; }
-    .secondary { fill: #34a853; }
-    .accent { fill: #fbbc05; }
-  </style>
-  
-  <!-- Code/Bracket Symbol -->
-  <path class="primary" d="M30,10 L15,30 L30,50" stroke="#4a86e8" stroke-width="4" fill="none" />
-  <path class="primary" d="M50,10 L65,30 L50,50" stroke="#4a86e8" stroke-width="4" fill="none" />
-  
-  <!-- AI Circle -->
-  <circle cx="40" cy="30" r="12" fill="#34a853" opacity="0.7" />
-  
-  <!-- Text -->
-  <text x="80" y="35" class="logo-text primary" font-size="20">ClaudeCoder</text>
-  
-  <!-- Decorative Element -->
-  <rect x="75" y="40" width="120" height="3" rx="1.5" class="accent" />
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a86e8" />
+      <stop offset="100%" stop-color="#34a853" />
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="90" fill="white" stroke="url(#gradient)" stroke-width="8"/>
+  <g transform="translate(50, 60)">
+    <!-- Stylized "C" for Claude -->
+    <path d="M40,0 C18,0 0,18 0,40 C0,62 18,80 40,80 C52,80 62,74 70,65" stroke="url(#gradient)" stroke-width="12" stroke-linecap="round" fill="none"/>
+    <!-- Code brackets around the C -->
+    <path d="M10,25 L0,40 L10,55" stroke="#4a86e8" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <path d="M90,25 L100,40 L90,55" stroke="#34a853" stroke-width="6" stroke-linecap="round" fill="none"/>
+  </g>
 </svg>

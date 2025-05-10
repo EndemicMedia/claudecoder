@@ -1,0 +1,360 @@
+/* Custom styles for ClaudeCoder site */
+
+/* Modern color variables */
+:root {
+  --primary-color: #4a86e8;
+  --secondary-color: #34a853;
+  --accent-color: #fbbc05;
+  --dark-color: #272822;
+  --light-color: #f8f9fa;
+  --text-color: #4d4d4d;
+  --heading-color: #333;
+  --link-color: #3c75c0;
+  --code-bg: #f5f7f9;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.page-header {
+  background-image: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+  padding: 3rem 4rem;
+  text-align: center;
+  color: white;
+}
+
+@media screen and (max-width: 42em) {
+  .page-header {
+    padding: 2rem 1rem;
+  }
+}
+
+.project-name {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 2.25rem;
+}
+
+.project-tagline {
+  margin-bottom: 2rem;
+  font-weight: 400;
+  opacity: 0.9;
+  font-size: 1.25rem;
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+p {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+code, pre {
+  background-color: var(--code-bg);
+  border-radius: 4px;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  padding: 0.2em 0.4em;
+  font-size: 0.9em;
+}
+
+pre {
+  padding: 1rem;
+  overflow: auto;
+}
+
+pre code {
+  padding: 0;
+  background-color: transparent;
+}
+
+.btn {
+  display: inline-block;
+  margin: 1rem 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+}
+
+/* Custom sections */
+.hero-section {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.hero-section .btn.primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.hero-section .btn.primary:hover {
+  background-color: #3a76d8;
+}
+
+.hero-section .btn.secondary {
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.hero-section .btn.secondary:hover {
+  background-color: var(--light-color);
+}
+
+.features-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 3rem 0;
+}
+
+.feature-card {
+  flex-basis: calc(33% - 2rem);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+  color: var(--heading-color);
+  margin-top: 0;
+}
+
+.feature-card p {
+  color: var(--text-color);
+}
+
+.feature-card .feature-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+@media screen and (max-width: 767px) {
+  .feature-card {
+    flex-basis: calc(50% - 2rem);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .feature-card {
+    flex-basis: 100%;
+  }
+}
+
+.use-cases-section {
+  margin: 3rem 0;
+}
+
+.use-case {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: var(--light-color);
+  border-radius: 8px;
+}
+
+.use-case h3 {
+  margin-top: 0;
+}
+
+.use-case-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.use-case-text {
+  flex: 1 1 300px;
+}
+
+.use-case-image {
+  flex: 1 1 300px;
+  min-height: 200px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  overflow: hidden;
+}
+
+.use-case-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.testimonials-section {
+  margin: 3rem 0;
+  padding: 2rem;
+  background-color: var(--light-color);
+  border-radius: 8px;
+}
+
+.testimonial {
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-author {
+  font-style: normal;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  text-align: right;
+  color: var(--heading-color);
+}
+
+.cta-section {
+  margin: 3rem 0;
+  text-align: center;
+  padding: 3rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 8px;
+}
+
+.cta-section h2 {
+  color: white;
+  margin-top: 0;
+}
+
+.cta-section .btn {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: white;
+  color: var(--primary-color);
+  border: none;
+}
+
+.cta-section .btn:hover {
+  background-color: var(--light-color);
+  transform: translateY(-2px);
+}
+
+/* Logo placeholder */
+.logo-container {
+  margin-bottom: 1.5rem;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+}
+
+/* Setup section */
+.setup-section {
+  margin: 3rem 0;
+  padding: 2rem;
+  background-color: var(--light-color);
+  border-radius: 8px;
+}
+
+.setup-section ol {
+  padding-left: 1.5rem;
+}
+
+.setup-section li {
+  margin-bottom: 1.5rem;
+}
+
+.setup-section code {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+.highlight {
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.site-footer {
+  padding-top: 2rem;
+  margin-top: 4rem;
+  border-top: 1px solid #eaecef;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+#skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+
+#skip-to-content:focus {
+  top: 0;
+}
+
+/* Override default link color in the header */
+.page-header a {
+  color: white;
+}
+
+/* Override default code background in highlighted blocks */
+.highlighter-rouge .highlight {
+  background-color: #f8f8f8;
+}
+
+/* Add this to ensure the code blocks are properly styled */
+.language-yaml .highlight pre {
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  padding: 1rem;
+}
