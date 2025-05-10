@@ -1,11 +1,11 @@
 # ClaudeCoder
 
-ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 to suggest code changes. It analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
+ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 Sonnet to suggest code changes. It analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
 
 ## Features
 
 - Automatically analyzes pull requests and suggests code changes based on the pull request description
-- Utilizes AWS Bedrock with Claude 3.7 for intelligent code analysis
+- Utilizes AWS Bedrock with Claude 3.7 Sonnet for intelligent code analysis
 - Handles large responses with multi-part processing
 - Respects `.gitignore` rules when analyzing repository content
 - Commits suggested changes directly to the pull request branch
@@ -55,7 +55,7 @@ jobs:
 Once set up, ClaudeCoder will automatically run on every new pull request or when a pull request is edited. It will:
 
 1. Analyze the repository content and the pull request description
-2. Generate code suggestions using Claude 3.7
+2. Generate code suggestions using Claude 3.7 Sonnet
 3. Apply the suggested changes to the pull request branch
 4. Add a comment to the pull request with a summary of the changes
 
@@ -65,24 +65,37 @@ No additional action is required from the user after setup.
 
 You can configure ClaudeCoder using the following inputs in your workflow file:
 
+### Basic Configuration
 - `aws-region`: The AWS region to use (default: `us-east-1`)
 - `max-requests`: Maximum number of requests to make to AWS Bedrock (default: `10`)
+
+### Advanced Claude 3.7 Sonnet Configuration
+- `max-tokens`: Maximum number of tokens for Claude to generate (default: `64000`, up to 128K)
+- `enable-thinking`: Enable Claude's extended thinking capability (default: `true`)
+- `thinking-budget`: Token budget for Claude's thinking process (default: `1000`)
+- `extended-output`: Enable 128K extended output capability (default: `true`)
+- `request-timeout`: API request timeout in milliseconds (default: `3600000` - 60 minutes)
 
 Example with custom configuration:
 
 ```yaml
-- uses: your-github-username/claudecoder@v1
+- uses: EndemicMedia/claudecoder@v1.3.0
   with:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     aws-region: eu-west-1
-    max-requests: 3
+    max-requests: 5
+    max-tokens: 32000
+    enable-thinking: true
+    thinking-budget: 2000
+    extended-output: true
+    request-timeout: 1800000
 ```
 
 ## Limitations
 
 - ClaudeCoder is designed to suggest changes, but it's important to review all suggestions before merging.
-- The action is limited by the capabilities of Claude 3.7 and may not understand very complex or domain-specific code patterns.
+- The action is limited by the capabilities of Claude 3.7 Sonnet and may not understand very complex or domain-specific code patterns.
 - There's a limit to the amount of repository content that can be analyzed due to API constraints.
 
 ## Contributing

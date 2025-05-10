@@ -17,6 +17,30 @@ inputs:
     description: 'AWS Region'
     required: false
     default: 'us-east-1'
+  max-tokens:
+    description: 'Maximum number of tokens for Claude to generate (up to 128K)'
+    required: false
+    default: '64000'
+  max-requests:
+    description: 'Maximum number of requests to make to AWS Bedrock'
+    required: false
+    default: '10'
+  enable-thinking:
+    description: 'Enable Claude''s extended thinking capability (true/false)'
+    required: false
+    default: 'true'
+  thinking-budget:
+    description: 'Token budget for Claude''s thinking process'
+    required: false
+    default: '1000'
+  extended-output:
+    description: 'Enable 128K extended output capability (true/false)'
+    required: false
+    default: 'true'
+  request-timeout:
+    description: 'API request timeout in milliseconds'
+    required: false
+    default: '3600000'
 runs:
   using: "node20"
   main: "dist/index.js"
