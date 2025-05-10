@@ -17,6 +17,10 @@ inputs:
     description: 'AWS Region'
     required: false
     default: 'us-east-1'
+  required-label:
+    description: 'Label required on PR for processing (default: claudecoder)'
+    required: false
+    default: 'claudecoder'
   max-tokens:
     description: 'Maximum number of tokens for Claude to generate (up to 128K)'
     required: false

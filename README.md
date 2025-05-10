@@ -11,6 +11,7 @@ ClaudeCoder is a GitHub Action that automatically processes pull requests using 
 - Handles large responses with multi-part processing
 - Respects `.gitignore` rules when analyzing repository content
 - Commits suggested changes directly to the pull request branch
+- Processes only pull requests with the "claudecoder" label (configurable)
 
 ## Prerequisites
 
@@ -33,7 +34,7 @@ name: ClaudeCoder
 
 on:
   pull_request:
-    types: [opened, edited]
+    types: [opened, edited, labeled]
   pull_request_review_comment:
     types: [created, edited]
   issue_comment:
@@ -41,28 +42,37 @@ on:
 
 jobs:
   process-pr:
+    # Only run this job if the PR has the 'claudecoder' label
+    # This is a recommended filter at the workflow level for efficiency
+    if: contains(github.event.pull_request.labels.*.name, 'claudecoder')
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: ClaudeCoderAction
-      uses: EndemicMedia/claudecoder@v1.1.0
+      uses: EndemicMedia/claudecoder@v2.0.0
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        # The following is optional - defaults to 'claudecoder'
+        required-label: 'claudecoder'
 ```
 
 ## Usage
 
-Once set up, ClaudeCoder will automatically run on every new pull request or when a pull request is edited. It will:
+ClaudeCoder will automatically run on pull requests that have the "claudecoder" label. It will:
 
-1. Analyze the repository content and the pull request description
-2. Generate code suggestions using Claude 3.7 Sonnet
-3. Apply the suggested changes to the pull request branch
-4. Add a comment to the pull request with a summary of the changes
+1. Verify that the PR has the required label (default: "claudecoder")
+2. Analyze the repository content and the pull request description
+3. Generate code suggestions using Claude 3.7 Sonnet
+4. Apply the suggested changes to the pull request branch
+5. Add a comment to the pull request with a summary of the changes
 
-No additional action is required from the user after setup.
+To use ClaudeCoder on a pull request:
+1. Create or edit a pull request
+2. Add the "claudecoder" label to the PR
+3. Wait for ClaudeCoder to process the PR and suggest changes
 
 ## Configuration
 
@@ -71,6 +81,7 @@ You can configure ClaudeCoder using the following inputs in your workflow file:
 ### Basic Configuration
 - `aws-region`: The AWS region to use (default: `us-east-1`)
 - `max-requests`: Maximum number of requests to make to AWS Bedrock (default: `10`)
+- `required-label`: Label required on PR for processing (default: `claudecoder`)
 
 ### Advanced Claude 3.7 Sonnet Configuration
 - `max-tokens`: Maximum number of tokens for Claude to generate (default: `64000`, up to 128K)
@@ -82,7 +93,7 @@ You can configure ClaudeCoder using the following inputs in your workflow file:
 Example with custom configuration:
 
 ```yaml
-- uses: EndemicMedia/claudecoder@v1.3.0
+- uses: EndemicMedia/claudecoder@v2.0.0
   with:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -93,7 +104,22 @@ Example with custom configuration:
     thinking-budget: 2000
     extended-output: true
     request-timeout: 1800000
+    required-label: 'ai-review' # Custom label
 ```
+
+## Label Filtering Options
+
+You can implement label filtering in two ways:
+
+1. **Workflow-level filtering (recommended)**: Using the `if` condition in your workflow file as shown in the setup example:
+   ```yaml
+   if: contains(github.event.pull_request.labels.*.name, 'claudecoder')
+   ```
+   This prevents the job from running entirely when the label is not present, saving computational resources.
+
+2. **Action-level filtering (built-in)**: The action itself checks for the required label and exits gracefully if missing, adding a comment to inform users. This acts as a safety mechanism even if workflow-level filtering is not set up.
+
+We recommend using both approaches for optimal efficiency and user experience.
 
 ## Limitations
 

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `extended-output`: Enable 128K extended output capability (default: true)
   - `request-timeout`: API request timeout in milliseconds (default: 3600000)
   - `max-requests`: Maximum number of requests to make to AWS Bedrock (default: 10)
+  - `required-label`: Label required on PR for processing (default: claudecoder)
 
 ### Changed
 - Upgraded to Claude 3.7 Sonnet model from AWS Bedrock
@@ -31,6 +32,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Better handling of API timeouts for large responses
 - Updated model ID format to use the inference profile ID required for AWS Bedrock cross-region inference (`us.anthropic.claude-3-7-sonnet-20250219-v1:0`)
 - Updated default thinking budget from 1000 to 1024 tokens to meet Bedrock API minimum requirement
+
+### BREAKING CHANGES
+- PRs now require a label (default: 'claudecoder') to be processed by the action
+- Existing workflows will need to be updated to add labels to PRs that should be processed
+- Workflow triggers should be updated to include the 'labeled' event type for optimal performance
 
 ## [1.2.0] - 2025-05-10
 
