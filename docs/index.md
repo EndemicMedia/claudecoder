@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ClaudeCoder - AI-powered code changes for GitHub
+title: ClaudeCoderAction - AI-powered code changes for GitHub
 description: Automatically process pull requests using AWS Bedrock and Claude 3.7 to suggest and implement code changes
 ---
 
@@ -10,13 +10,13 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
   </div>
   <h1>Turn PR feedback into code instantly</h1>
   <p>ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 Sonnet to generate and implement intelligent code changes.</p>
-  <a href="https://github.com/marketplace/actions/claudecoderaction" class="btn primary">Get Started with ClaudeCoder</a>
+  <a href="https://github.com/marketplace/actions/claudecoderaction" class="btn primary">Get Started with ClaudeCoderAction</a>
   <a href="#quickstart" class="btn secondary">Quick Start</a>
 </div>
 
 <div class="features-section">
   <div class="feature-card">
-    <div class="feature-icon">⚡</div>
+    <div class="feature-icon"></div>
     <h3>AI-Powered Code Changes</h3>
     <p>Harness Claude 3.7 Sonnet's intelligence to analyze PR descriptions and automatically implement suggested changes.</p>
   </div>
@@ -34,7 +34,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
 
 <div class="use-cases-section">
   <h2>Use Cases</h2>
-  
+
   <div class="use-case">
     <h3>Implementing Code Review Feedback</h3>
     <div class="use-case-content">
@@ -47,7 +47,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
       </div>
     </div>
   </div>
-  
+
   <div class="use-case">
     <h3>Fixing Bugs from Issue Descriptions</h3>
     <div class="use-case-content">
@@ -60,7 +60,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
       </div>
     </div>
   </div>
-  
+
   <div class="use-case">
     <h3>Refactoring Code Per Architecture Discussions</h3>
     <div class="use-case-content">
@@ -83,7 +83,7 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
 
 <div id="quickstart" class="setup-section">
   <h2>Quick Start Guide</h2>
-  
+
   <ol>
     <li>
       <p><strong>Add your AWS credentials as secrets in your GitHub repository:</strong></p>
@@ -94,10 +94,10 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
     </li>
     <li>
       <p><strong>Create a workflow file</strong> at <code>.github/workflows/claudecoder.yml</code>:</p>
-      
+
       <div class="language-yaml highlighter-rouge">
         <div class="highlight">
-          <pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">ClaudeCoder</span>
+          <pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">ClaudeCoderAction</span>
 
 <span class="na">on</span><span class="pi">:</span>
   <span class="na">pull_request</span><span class="pi">:</span>
@@ -134,46 +134,46 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
       <p><strong>Let ClaudeCoder work its magic!</strong> The action will analyze your description, make the requested changes, and commit them to your PR branch.</p>
     </li>
   </ol>
-  
+
   <p><a href="/claudecoder/readme/" class="btn primary">View Full Documentation</a></p>
 </div>
 
 <div class="testimonials-section">
   <h2>Support the Future of Dev Productivity</h2>
-  
+
   <div class="support-section">
     <h3>Bridging Human Creativity and AI Implementation</h3>
     <p>ClaudeCoder represents a new paradigm in developer workflows—where human creativity and strategic thinking combine with AI-powered implementation. Our small team of open-source contributors is dedicated to pushing this boundary further.</p>
-    
+
     <p>As the relationship between developers and AI evolves, we're committed to creating tools that enhance human capabilities rather than replace them. With your support, we can continue refining this vision.</p>
 
     <h3>Ways to Support Our Work</h3>
     <div class="support-options">
       <div class="support-option">
         <h4>GitHub Sponsors</h4>
-        <p>Directly fund our development through <a href="https://github.com/sponsors/EndemicMedia" target="_blank">GitHub Sponsors</a>. Even $5/month helps us dedicate more time to improving ClaudeCoder.</p>
+        <p>Directly fund our development through <a href="https://github.com/sponsors/EndemicMedia" target="_blank">GitHub Sponsors</a>. Even $5/month helps us dedicate more time to improving ClaudeCoderAction.</p>
       </div>
-      
+
       <div class="support-option">
         <h4>Try Our Recommended Tools</h4>
         <p>We've tested dozens of AWS and developer tools. Support us by checking out these quality services through our affiliate links:</p>
         <ul>
-          <li><a href="https://aws.amazon.com/bedrock/" target="_blank">AWS Bedrock</a> - The foundation of ClaudeCoder's AI capabilities</li>
-          <li><a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a> - Pair with ClaudeCoder for the ultimate AI coding experience</li>
+          <li><a href="https://aws.amazon.com/bedrock/" target="_blank">AWS Bedrock</a> - The foundation of ClaudeCoderAction's AI capabilities</li>
+          <li><a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a> - Pair with ClaudeCoderAction for the ultimate AI coding experience</li>
         </ul>
       </div>
-      
+
       <div class="support-option">
         <h4>Contribute Code</h4>
         <p>Help us improve! We welcome pull requests for <a href="https://github.com/EndemicMedia/claudecoder/blob/main/ROADMAP.md" target="_blank">roadmap features</a>, bug fixes, or documentation enhancements.</p>
       </div>
     </div>
-    
+
     <h3>Building the Smart Development Ecosystem</h3>
-    <p>We believe the future belongs to developers who effectively partner with AI tools. ClaudeCoder is our contribution to this ecosystem—transforming how teams implement feedback and accelerate development cycles.</p>
-    
+    <p>We believe the future belongs to developers who effectively partner with AI tools. ClaudeCoderAction is our contribution to this ecosystem—transforming how teams implement feedback and accelerate development cycles.</p>
+
     <p>Your support doesn't just fund a project; it helps shape a future where developers can focus on high-level problems while AI handles implementation details. Join us in making that vision a reality.</p>
-    
+
     <div class="cta-mini">
       <a href="https://github.com/sponsors/EndemicMedia" class="btn primary" target="_blank">Become a Sponsor</a>
     </div>
