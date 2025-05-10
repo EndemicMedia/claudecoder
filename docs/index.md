@@ -65,18 +65,31 @@ No additional action is required from the user after setup.
 
 You can configure ClaudeCoder using the following inputs in your workflow file:
 
+### Basic Configuration
 - `aws-region`: The AWS region to use (default: `us-east-1`)
 - `max-requests`: Maximum number of requests to make to AWS Bedrock (default: `10`)
+
+### Advanced Claude 3.7 Sonnet Configuration
+- `max-tokens`: Maximum number of tokens for Claude to generate (default: `64000`, up to 128K)
+- `enable-thinking`: Enable Claude's extended thinking capability (default: `true`)
+- `thinking-budget`: Token budget for Claude's thinking process (default: `1000`)
+- `extended-output`: Enable 128K extended output capability (default: `true`)
+- `request-timeout`: API request timeout in milliseconds (default: `3600000` - 60 minutes)
 
 Example with custom configuration:
 
 ```yaml
-- uses: your-github-username/claudecoder@v1
+- uses: EndemicMedia/claudecoder@v1.3.0
   with:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     aws-region: eu-west-1
-    max-requests: 3
+    max-requests: 5
+    max-tokens: 32000
+    enable-thinking: true
+    thinking-budget: 2000
+    extended-output: true
+    request-timeout: 1800000
 ```
 
 ## Limitations

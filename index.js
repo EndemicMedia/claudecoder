@@ -3,7 +3,7 @@ const github = require('@actions/github');
 const { BedrockClient } = require('./bedrock-client');
 const { getRepositoryContent } = require('./utils');
 
-const MAX_REQUESTS = 10;
+// Default MAX_REQUESTS is now defined through the input parameter
 
 function minifyContent(content) {
   return content.replace(/\s+/g, ' ').trim();
@@ -17,8 +17,23 @@ async function main() {
     const awsAccessKeyId = core.getInput('aws-access-key-id', { required: true });
     const awsSecretAccessKey = core.getInput('aws-secret-access-key', { required: true });
     const awsRegion = core.getInput('aws-region', { required: true });
+    
+    // Get configurable parameters from action inputs
+    const maxTokens = parseInt(core.getInput('max-tokens') || '64000', 10);
+    const maxRequests = parseInt(core.getInput('max-requests') || '10', 10);
+    const enableThinking = core.getInput('enable-thinking') === 'true';
+    const thinkingBudget = parseInt(core.getInput('thinking-budget') || '1000', 10);
+    const extendedOutput = core.getInput('extended-output') === 'true';
+    const requestTimeout = parseInt(core.getInput('request-timeout') || '3600000', 10);
 
-    const bedrock = new BedrockClient(awsRegion, awsAccessKeyId, awsSecretAccessKey);
+    // Initialize BedrockClient with configurable options
+    const bedrock = new BedrockClient(awsRegion, awsAccessKeyId, awsSecretAccessKey, {
+      maxTokens,
+      enableThinking,
+      thinkingBudget,
+      extendedOutput,
+      requestTimeout
+    });
 
     const context = github.context;
     const { owner, repo } = context.repo;
@@ -73,7 +88,7 @@ async function main() {
     `;
 
     core.info("Sending initial request to Claude 3.7 Sonnet...");
-    const claudeResponse = await bedrock.getCompleteResponse(initialPrompt, null, MAX_REQUESTS);
+    const claudeResponse = await bedrock.getCompleteResponse(initialPrompt, null, maxRequests);
     core.info("Received complete response from Claude 3.7 Sonnet. Processing...");
 
     const commands = claudeResponse.split('\n').filter(cmd => cmd.trim().startsWith('git'));

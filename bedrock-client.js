@@ -2,16 +2,23 @@ const core = require('@actions/core');
 const { BedrockRuntimeClient, InvokeModelCommand } = require("@aws-sdk/client-bedrock-runtime");
 
 class BedrockClient {
-  constructor(region, accessKeyId, secretAccessKey) {
+  constructor(region, accessKeyId, secretAccessKey, options = {}) {
+    // Initialize configurable parameters with defaults
+    this.maxTokens = options.maxTokens || 64000; // Maximum supported is 128K, default to 64K (GA limit)
+    this.enableThinking = options.enableThinking !== undefined ? options.enableThinking : true;
+    this.thinkingBudget = options.thinkingBudget || 1000; // Default to 1000 tokens for thinking
+    this.extendedOutput = options.extendedOutput !== undefined ? options.extendedOutput : true; // Enable 128K output by default
+    this.requestTimeout = options.requestTimeout || 3600000; // Default to 60 minutes (3600000 ms)
+
     this.client = new BedrockRuntimeClient({
       region,
       credentials: {
         accessKeyId,
         secretAccessKey
       },
-      // Increase timeout to 60 minutes (3600000 ms) as recommended for Claude 3.7 Sonnet
+      // Use configurable timeout
       requestHandler: {
-        requestTimeout: 3600000
+        requestTimeout: this.requestTimeout
       }
     });
   }
@@ -49,13 +56,13 @@ class BedrockClient {
       accept: "application/json",
       body: JSON.stringify({ 
         anthropic_version: "bedrock-2023-05-31",
-        anthropic_beta: ["output-128k-2025-02-19"], // Enable extended output length (beta)
-        max_tokens: 16000, // Increased from 4000 to better utilize Claude 3.7 Sonnet's capabilities
+        anthropic_beta: this.extendedOutput ? ["output-128k-2025-02-19"] : [], // Enable extended output length (beta) if configured
+        max_tokens: this.maxTokens, // Use configurable max tokens
         // Enable extended thinking for complex code analysis tasks
-        thinking: {
+        thinking: this.enableThinking ? {
           type: "enabled",
-          budget_tokens: 8000 // Allocate budget for reasoning/thinking
-        },
+          budget_tokens: this.thinkingBudget // Use configurable thinking budget
+        } : undefined,
         messages: messages
       })
     });
