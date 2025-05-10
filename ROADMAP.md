@@ -18,6 +18,14 @@ This document outlines the planned features and enhancements for the ClaudeCoder
 
 ## Features Roadmap
 
+### Meaninful commit messages
+
+**Description:** Modify how commit messages are created so they are not a single standard message but contextually aware of what has been changed
+
+**Implementation Details:**
+- Evaluate the best architecture to get the commit message together with the code changes, without making a secondary request just for the commit message
+- Commit messages obey a .claudecoder stylefile with details on how the message is generated (example: - add emojis at the end; - use semver rules) etc
+
 ### Automatic Model Selection
 
 **Description:** ClaudeCoder will automatically select from Haiku or Sonnet based on the complexity of the task to save on API calls
