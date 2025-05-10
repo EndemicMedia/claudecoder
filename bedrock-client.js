@@ -89,6 +89,11 @@ class BedrockClient {
         break;
       }
 
+      // Check if response contains git commands
+      if (requestCount === 1 && !response.includes('git')) {
+        throw new Error('No valid git commands found in the response.');
+      }
+
       const lastCompleteCommand = fullResponse.lastIndexOf('git');
       if (lastCompleteCommand === -1) {
         throw new Error('No valid git commands found in the response.');
