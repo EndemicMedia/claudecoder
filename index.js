@@ -156,10 +156,4 @@ async function main() {
   }
 }
 
-// Export the main function so it can be imported in tests
-module.exports = main;
-
-// Run the function if this file is executed directly
-if (require.main === module) {
-  main();
-}
+main();
