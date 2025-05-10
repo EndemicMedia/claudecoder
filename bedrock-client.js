@@ -40,7 +40,7 @@ class BedrockClient {
     });
 
     const command = new InvokeModelCommand({
-      modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0",
+      modelId: "anthropic.claude-3-7-sonnet-20250219",
       contentType: "application/json",
       accept: "application/json",
       body: JSON.stringify({ 
@@ -87,6 +87,11 @@ class BedrockClient {
       if (response.includes('END_OF_SUGGESTIONS')) {
         core.info('Received end of suggestions signal.');
         break;
+      }
+
+      // Check if response contains git commands
+      if (requestCount === 1 && !response.includes('git')) {
+        throw new Error('No valid git commands found in the response.');
       }
 
       const lastCompleteCommand = fullResponse.lastIndexOf('git');

@@ -1,5 +1,5 @@
 name: ClaudeCoderAction
-description: 'Process pull requests using AWS Bedrock and Claude 3.5 Sonnet to suggest code changes'
+description: 'Process pull requests using AWS Bedrock and Claude 3.7 Sonnet to suggest code changes'
 branding:
   icon: "cpu"
   color: orange
