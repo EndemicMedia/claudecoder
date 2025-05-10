@@ -32,10 +32,10 @@ jobs:
         run: |
           if [ "$AWS_KEY_AVAILABLE" = "true" ]; then
             echo "AWS credentials available"
-            echo "::set-output name=has_aws_creds::true"
+            echo "has_aws_creds=true" >> $GITHUB_OUTPUT
           else
             echo "AWS credentials not available in this context"
-            echo "::set-output name=has_aws_creds::false"
+            echo "has_aws_creds=false" >> $GITHUB_OUTPUT
           fi
           
       # Run ClaudeCoder on its own PR (self-test)
@@ -50,7 +50,7 @@ jobs:
           
       # Post results comment  
       - name: Post test results
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
