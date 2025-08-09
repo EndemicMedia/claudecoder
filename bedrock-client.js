@@ -9,6 +9,7 @@ class BedrockClient {
     this.thinkingBudget = options.thinkingBudget || 1024; // Default to 1024 tokens for thinking (API minimum)
     this.extendedOutput = options.extendedOutput !== undefined ? options.extendedOutput : true; // Enable 128K output by default
     this.requestTimeout = options.requestTimeout || 3600000; // Default to 60 minutes (3600000 ms)
+    this.modelId = options.model || "us.anthropic.claude-3-7-sonnet-20250219-v1:0"; // Default model
 
     this.client = new BedrockRuntimeClient({
       region,
@@ -51,7 +52,7 @@ class BedrockClient {
     });
 
     const command = new InvokeModelCommand({
-      modelId: "us.anthropic.claude-3-7-sonnet-20250219-v1:0",
+      modelId: this.modelId,
       contentType: "application/json",
       accept: "application/json",
       body: JSON.stringify({ 

@@ -4,7 +4,7 @@ const path = require('path');
 const ignore = require('ignore');
 
 async function getRepositoryContent() {
-  const ig = ignore().add(['.git', 'node_modules', '.github', "package-lock.json", "bedrock-client.js", "github-client.js", "pr-processor.js", "utils.js"]);
+  const ig = ignore().add(['.git', 'node_modules', '.github', 'action', 'dist', '__tests__', 'docs', '.DS_Store', '.env', '.env.example', "package-lock.json", "bedrock-client.js", "github-client.js", "pr-processor.js", "utils.js"]);
   const content = {};
 
   async function readDir(dir) {

@@ -19,14 +19,14 @@
 </p>
 
 <p align="center">
-  <b>Turn PR feedback into code instantly using Claude 3.7 Sonnet</b>
+  <b>Turn PR feedback into code instantly using multiple AI providers</b>
 </p>
 
 ---
 
 ## Overview
 
-ClaudeCoder is a GitHub Action that automatically processes pull requests using AWS Bedrock and Claude 3.7 Sonnet to suggest code changes. It analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
+ClaudeCoder is a GitHub Action that automatically processes pull requests using **multiple AI providers** (AWS Bedrock, OpenRouter) with **intelligent model selection** to suggest code changes. It analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
 
 <p align="center">
   <a href="https://github.com/EndemicMedia/claudecoder" class="btn primary">Get Started</a>
@@ -36,29 +36,52 @@ ClaudeCoder is a GitHub Action that automatically processes pull requests using 
 
 ## ✨ Features
 
-- 🤖 **AI-Powered Code Changes** - Harness Claude 3.7 Sonnet's intelligence to analyze PR descriptions and automatically implement suggested changes
+- 🤖 **Multi-Provider AI Support** - Choose between AWS Bedrock and OpenRouter with automatic provider detection based on model selection
+- 📊 **Intelligent Model Selection** - Priority-based model fallback system with support for multiple Claude models and free OpenRouter models
 - 🔄 **Seamless GitHub Integration** - Works directly within your existing GitHub workflow with zero disruption to your development process
-- 🛠️ **Highly Configurable** - Customize token limits, thinking capabilities, response handling, and more to fit your team's specific needs
+- 🛠️ **Highly Configurable** - Customize token limits, thinking capabilities, response handling, model selection, and more to fit your team's specific needs
 - 🔍 **Context-Aware** - Analyzes your entire repository to ensure changes align with your existing codebase
+- 💰 **Cost Flexibility** - Use free OpenRouter models or premium AWS Bedrock models based on your needs and budget
 - **Accelerated Development** - Save time on routine code changes and let your team focus on strategic work
-- 🔒 **Security-Focused** - Your code stays within your own GitHub and AWS environments
+- 🔒 **Security-Focused** - Your code stays within your chosen AI provider environment (AWS or OpenRouter)
 
 ## 📋 Prerequisites
 
-Before you can use ClaudeCoderAction, you need to have:
+Before you can use ClaudeCoderAction, you need **one of the following**:
 
+### Option 1: AWS Bedrock (Premium Models)
 1. An AWS account with access to AWS Bedrock
 2. AWS credentials (Access Key ID and Secret Access Key) with permissions to invoke AWS Bedrock
-3. A GitHub repository where you want to use this action
+3. Access to Claude models in your AWS Bedrock region
+
+### Option 2: OpenRouter (Free & Premium Models)
+1. An OpenRouter account (free signup at [openrouter.ai](https://openrouter.ai))
+2. OpenRouter API key with access to free or paid models
+3. No additional setup required - works immediately
+
+### Common Requirements
+- A GitHub repository where you want to use this action
+- Basic understanding of GitHub Actions and workflows
 
 ## 🛠️ Setup
 
-1. Add the following secrets to your GitHub repository:
-   - `AWS_ACCESS_KEY_ID`: Your AWS Access Key ID
-   - `AWS_SECRET_ACCESS_KEY`: Your AWS Secret Access Key
+### 1. Add Required Secrets
 
-2. Create a workflow file (e.g., `.github/workflows/claudecoder.yml`) in your repository with the following content:
+**For AWS Bedrock:**
+- `AWS_ACCESS_KEY_ID`: Your AWS Access Key ID
+- `AWS_SECRET_ACCESS_KEY`: Your AWS Secret Access Key
 
+**For OpenRouter:**
+- `OPENROUTER_API_KEY`: Your OpenRouter API key
+
+**Optional:**
+- `MODELS`: Comma-separated list of models in priority order (auto-detects provider)
+
+### 2. Create Workflow File
+
+Create a workflow file (e.g., `.github/workflows/claudecoder.yml`) with one of the following configurations:
+
+#### Option A: OpenRouter (Free Models - Recommended)
 ```yaml
 name: ClaudeCoder
 
@@ -72,21 +95,74 @@ on:
 
 jobs:
   process-pr:
-    # Only run this job if the PR has the 'claudecoder' label
-    # This is a recommended filter at the workflow level for efficiency
     if: contains(github.event.pull_request.labels.*.name, 'claudecoder')
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: ClaudeCoderAction
-      uses: EndemicMedia/claudecoder@v2.0.0
+      uses: EndemicMedia/claudecoder@v2.1.0
+      with:
+        openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        # Uses free Kimi K2 model by default - no cost!
+```
+
+#### Option B: AWS Bedrock (Premium Models)
+```yaml
+name: ClaudeCoder
+
+on:
+  pull_request:
+    types: [opened, edited, labeled]
+  pull_request_review_comment:
+    types: [created, edited]
+  issue_comment:
+    types: [created, edited]
+
+jobs:
+  process-pr:
+    if: contains(github.event.pull_request.labels.*.name, 'claudecoder')
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: ClaudeCoderAction
+      uses: EndemicMedia/claudecoder@v2.1.0
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        # The following is optional - defaults to 'claudecoder'
-        required-label: 'claudecoder'
+```
+
+#### Option C: Custom Model Selection
+```yaml
+name: ClaudeCoder
+
+on:
+  pull_request:
+    types: [opened, edited, labeled]
+  pull_request_review_comment:
+    types: [created, edited]
+  issue_comment:
+    types: [created, edited]
+
+jobs:
+  process-pr:
+    if: contains(github.event.pull_request.labels.*.name, 'claudecoder')
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: ClaudeCoderAction
+      uses: EndemicMedia/claudecoder@v2.1.0
+      with:
+        # Provider auto-detected from first model
+        openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        models: ${{ secrets.MODELS }} # e.g., "google/gemini-2.0-flash-exp:free,moonshotai/kimi-k2:free"
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## ▶️ Usage
@@ -106,35 +182,67 @@ To use ClaudeCoder on a pull request:
 
 ## ⚙️ Configuration
 
-You can configure ClaudeCoderAction using the following inputs in your workflow file:
+### AI Provider Configuration
+- `ai-provider`: AI provider to use (`aws`, `openrouter`, or `auto` for auto-detection based on model)
+- `models`: Comma-separated list of models in priority order (auto-detects provider from first model)
+- `aws-access-key-id`: AWS Access Key ID (required for AWS Bedrock)
+- `aws-secret-access-key`: AWS Secret Access Key (required for AWS Bedrock)  
+- `aws-region`: AWS region to use (default: `us-east-1`)
+- `openrouter-api-key`: OpenRouter API key (required for OpenRouter)
 
-### Basic Configuration
-- `aws-region`: The AWS region to use (default: `us-east-1`)
-- `max-requests`: Maximum number of requests to make to AWS Bedrock (default: `10`)
+### Model Selection Examples
+```yaml
+# OpenRouter free models only (recommended)
+models: "moonshotai/kimi-k2:free,google/gemini-2.0-flash-exp:free,deepseek/deepseek-r1-0528:free"
+
+# AWS Bedrock models only  
+models: "us.anthropic.claude-3-7-sonnet-20250219-v1:0,anthropic.claude-3-haiku-20240307-v1:0"
+
+# Single model (no fallback)
+models: "moonshotai/kimi-k2:free"
+```
+
+### Basic Configuration  
+- `max-requests`: Maximum number of requests to make (default: `10`)
 - `required-label`: Label required on PR for processing (default: `claudecoder`)
 
-### Advanced Claude 3.7 Sonnet Configuration
-- `max-tokens`: Maximum number of tokens for Claude to generate (default: `64000`, up to 128K)
-- `enable-thinking`: Enable Claude's extended thinking capability (default: `true`)
-- `thinking-budget`: Token budget for Claude's thinking process (default: `1024`, minimum required by the API)
-- `extended-output`: Enable 128K extended output capability (default: `true`)
+### Advanced AI Configuration
+- `max-tokens`: Maximum number of tokens for AI to generate (default: `64000`, up to 128K)
+- `enable-thinking`: Enable extended thinking capability (default: `true`)
+- `thinking-budget`: Token budget for thinking process (default: `1024`)
+- `extended-output`: Enable 128K extended output capability (default: `true`)  
 - `request-timeout`: API request timeout in milliseconds (default: `3600000` - 60 minutes)
 
-Example with custom configuration:
+### Example Configurations
 
+#### OpenRouter with Custom Models and Settings
 ```yaml
-- uses: EndemicMedia/claudecoder@v2.0.0
+- uses: EndemicMedia/claudecoder@v2.1.0
+  with:
+    openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+    models: "google/gemini-2.0-flash-exp:free,moonshotai/kimi-k2:free"
+    max-requests: 5
+    max-tokens: 32000
+    enable-thinking: true
+    thinking-budget: 2000
+    required-label: 'ai-review'
+```
+
+#### AWS Bedrock with Custom Configuration
+```yaml
+- uses: EndemicMedia/claudecoder@v2.1.0
   with:
     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     aws-region: eu-west-1
+    models: "us.anthropic.claude-3-7-sonnet-20250219-v1:0"
     max-requests: 5
     max-tokens: 32000
     enable-thinking: true
     thinking-budget: 2000
     extended-output: true
     request-timeout: 1800000
-    required-label: 'ai-review' # Custom label
+    required-label: 'ai-review'
 ```
 
 ## 🏷️ Label Filtering Options

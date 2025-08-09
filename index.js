@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { BedrockClient } = require('./bedrock-client');
+const { AIProviderFactory } = require('./ai-provider');
+const { ModelSelector } = require('./model-selector');
 const { getRepositoryContent } = require('./utils');
 
 // Default MAX_REQUESTS is now defined through the input parameter
@@ -14,9 +15,30 @@ async function main() {
     const token = core.getInput('github-token', { required: true });
     const octokit = github.getOctokit(token);
 
-    const awsAccessKeyId = core.getInput('aws-access-key-id', { required: true });
-    const awsSecretAccessKey = core.getInput('aws-secret-access-key', { required: true });
-    const awsRegion = core.getInput('aws-region', { required: true });
+    // Get provider configuration
+    let aiProvider = core.getInput('ai-provider') || 'auto';
+    
+    // Get all credential inputs
+    const credentials = {
+      awsAccessKeyId: core.getInput('aws-access-key-id'),
+      awsSecretAccessKey: core.getInput('aws-secret-access-key'),
+      awsRegion: core.getInput('aws-region') || 'us-east-1',
+      openrouterApiKey: core.getInput('openrouter-api-key')
+    };
+    
+    // Parse models from input
+    const modelsInput = core.getInput('models');
+    const modelSelector = new ModelSelector(modelsInput);
+    
+    // For now, just use the first model (no fallback yet)
+    const selectedModel = modelSelector.getAllModels()[0];
+    core.info(`Selected model: ${selectedModel.displayName}`);
+    
+    // Set provider based on the selected model's provider if auto-detect
+    if (aiProvider === 'auto') {
+      aiProvider = selectedModel.provider;
+      core.info(`Auto-detected provider: ${aiProvider} (based on selected model)`);
+    }
     
     // Get configurable parameters from action inputs
     const maxTokens = parseInt(core.getInput('max-tokens') || '64000', 10);
@@ -27,25 +49,38 @@ async function main() {
     const requestTimeout = parseInt(core.getInput('request-timeout') || '3600000', 10);
     const requiredLabel = core.getInput('required-label') || 'claudecoder';
 
-    // Initialize BedrockClient with configurable options
-    const bedrock = new BedrockClient(awsRegion, awsAccessKeyId, awsSecretAccessKey, {
+    // Initialize AI provider with configurable options including the selected model
+    const aiClient = AIProviderFactory.createProvider(aiProvider, credentials, {
       maxTokens,
       enableThinking,
       thinkingBudget,
       extendedOutput,
-      requestTimeout
+      requestTimeout,
+      model: selectedModel.name
     });
 
     const context = github.context;
     const { owner, repo } = context.repo;
     const pull_number = context.payload.pull_request ? context.payload.pull_request.number : context.payload.issue.number;
 
-    core.info("Fetching PR details...");
-    const { data: pullRequest } = await octokit.rest.pulls.get({
-      owner,
-      repo,
-      pull_number,
-    });
+    // Check if we're running in local test mode (ACT environment)
+    const isLocalTest = process.env.ACT === 'true';
+    let pullRequest;
+
+    if (isLocalTest && context.payload.pull_request) {
+      // Use mock data from event payload for local testing
+      core.info("Using mock PR data from event payload (local test mode)...");
+      pullRequest = context.payload.pull_request;
+    } else {
+      // Use live GitHub API for production
+      core.info("Fetching PR details from GitHub API...");
+      const { data: prData } = await octokit.rest.pulls.get({
+        owner,
+        repo,
+        pull_number,
+      });
+      pullRequest = prData;
+    }
 
     // Check if PR has the required label
     const hasRequiredLabel = pullRequest.labels.some(
@@ -54,12 +89,16 @@ async function main() {
 
     if (!hasRequiredLabel) {
       core.info(`PR #${pull_number} does not have the required label '${requiredLabel}'. Skipping processing.`);
-      await octokit.rest.issues.createComment({
-        owner,
-        repo,
-        issue_number: pull_number,
-        body: `This PR was not processed by Claude 3.7 Sonnet because it doesn't have the required '${requiredLabel}' label. Add this label if you want AI assistance.`,
-      });
+      if (!isLocalTest) {
+        await octokit.rest.issues.createComment({
+          owner,
+          repo,
+          issue_number: pull_number,
+          body: `This PR was not processed by Claude 3.7 Sonnet because it doesn't have the required '${requiredLabel}' label. Add this label if you want AI assistance.`,
+        });
+      } else {
+        core.info("Skipping comment creation in local test mode.");
+      }
       return; // Exit early
     }
 
@@ -106,9 +145,9 @@ async function main() {
       Base branch: ${pullRequest.base.ref}
     `;
 
-    core.info("Sending initial request to Claude 3.7 Sonnet...");
-    const claudeResponse = await bedrock.getCompleteResponse(initialPrompt, null, maxRequests);
-    core.info("Received complete response from Claude 3.7 Sonnet. Processing...");
+    core.info(`Sending initial request to Claude 3.7 Sonnet via ${aiProvider.toUpperCase()}...`);
+    const claudeResponse = await aiClient.getCompleteResponse(initialPrompt, null, maxRequests);
+    core.info(`Received complete response from Claude 3.7 Sonnet via ${aiProvider.toUpperCase()}. Processing...`);
 
     const commands = claudeResponse.split('\n').filter(cmd => cmd.trim().startsWith('git'));
     for (const command of commands) {
@@ -123,38 +162,58 @@ async function main() {
         console.log('command', command);
         const content = claudeResponse.slice(contentStart + 6, contentEnd).trim();
         
-        try {
-          // First, try to get the current file content and SHA
-          const { data: fileData } = await octokit.rest.repos.getContent({
-            owner,
-            repo,
-            path: filePath,
-            ref: pullRequest.head.ref,
-          });
+        if (!isLocalTest) {
+          try {
+            // First, try to get the current file content and SHA
+            const { data: fileData } = await octokit.rest.repos.getContent({
+              owner,
+              repo,
+              path: filePath,
+              ref: pullRequest.head.ref,
+            });
 
-          // Update the file
-          await octokit.rest.repos.createOrUpdateFileContents({
-            owner,
-            repo,
-            path: filePath,
-            message: `Apply changes suggested by Claude 3.7 Sonnet`,
-            content: Buffer.from(content).toString('base64'),
-            sha: fileData.sha,
-            branch: pullRequest.head.ref,
-          });
-        } catch (error) {
-          if (error.status === 404) {
-            // File doesn't exist, so create it
+            // Update the file
             await octokit.rest.repos.createOrUpdateFileContents({
               owner,
               repo,
               path: filePath,
-              message: `Create file suggested by Claude 3.7 Sonnet`,
+              message: `Apply changes suggested by Claude 3.7 Sonnet`,
               content: Buffer.from(content).toString('base64'),
+              sha: fileData.sha,
               branch: pullRequest.head.ref,
             });
-          } else {
-            throw error;
+          } catch (error) {
+            if (error.status === 404) {
+              // File doesn't exist, so create it
+              await octokit.rest.repos.createOrUpdateFileContents({
+                owner,
+                repo,
+                path: filePath,
+                message: `Create file suggested by Claude 3.7 Sonnet`,
+                content: Buffer.from(content).toString('base64'),
+                branch: pullRequest.head.ref,
+              });
+            } else {
+              throw error;
+            }
+          }
+        } else {
+          // Local test mode: write files directly to filesystem
+          const fs = require('fs');
+          const path = require('path');
+          
+          try {
+            // Ensure directory exists
+            const dirPath = path.dirname(filePath);
+            if (dirPath !== '.' && dirPath !== '') {
+              fs.mkdirSync(dirPath, { recursive: true });
+            }
+            
+            // Write file content
+            fs.writeFileSync(filePath, content, 'utf8');
+            core.info(`✅ Created/updated local file: ${filePath}`);
+          } catch (error) {
+            core.error(`❌ Failed to write local file ${filePath}: ${error.message}`);
           }
         }
         
@@ -163,27 +222,32 @@ async function main() {
       }
     }
 
-    const { data: files } = await octokit.rest.pulls.listFiles({
-      owner,
-      repo,
-      pull_number,
-    });
-    
-    if (files.length > 0) {
-      await octokit.rest.issues.createComment({
+    if (!isLocalTest) {
+      const { data: files } = await octokit.rest.pulls.listFiles({
         owner,
         repo,
-        issue_number: pull_number,
-        body: "Changes suggested by Claude 3.7 Sonnet have been applied to this PR based on the latest comment. Please review the changes.",
+        pull_number,
       });
+      
+      if (files.length > 0) {
+        await octokit.rest.issues.createComment({
+          owner,
+          repo,
+          issue_number: pull_number,
+          body: "Changes suggested by Claude 3.7 Sonnet have been applied to this PR based on the latest comment. Please review the changes.",
+        });
+      } else {
+        core.info("No changes to commit.");
+        await octokit.rest.issues.createComment({
+          owner,
+          repo,
+          issue_number: pull_number,
+          body: "Claude 3.7 Sonnet analyzed the latest comment and the repository content but did not suggest any changes.",
+        });
+      }
     } else {
-      core.info("No changes to commit.");
-      await octokit.rest.issues.createComment({
-        owner,
-        repo,
-        issue_number: pull_number,
-        body: "Claude 3.7 Sonnet analyzed the latest comment and the repository content but did not suggest any changes.",
-      });
+      core.info("Local test mode: Skipping file listing and comment creation.");
+      core.info("ClaudeCoder processing completed successfully in local test mode!");
     }
   } catch (error) {
     core.setFailed(`Action failed with error: ${error.message}`);

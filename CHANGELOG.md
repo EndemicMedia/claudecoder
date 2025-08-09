@@ -7,17 +7,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2025-08-09
+
 ### Added
-- Modernized GitHub Pages website with improved design and graphics
-- New SVG illustrations for code review, bug fixing, and refactoring examples
-- Interactive JavaScript for smoother page scrolling and visual effects
-- GitHub Sponsors support via FUNDING.yml configuration
-- Enhanced README with beautiful header, additional badges, and sponsorship information
-- Improved documentation presentation with matching styles and badges
+- **Multi-Provider AI Support**: Added OpenRouter as an alternative to AWS Bedrock
+  - OpenRouter client with full API integration (`openrouter-api-key` input)
+  - Support for free OpenRouter models (Kimi K2, Gemini 2.0 Flash, DeepSeek, etc.)
+  - Automatic provider detection based on model selection
+- **Intelligent Model Selection System**: Priority-based model selection with fallback support
+  - `models` input parameter for comma-separated model priority lists
+  - ModelSelector class for parsing and managing model priorities  
+  - Auto-detection of provider (AWS/OpenRouter) based on model names
+  - Support for mixing different model types with intelligent routing
+- **Enhanced Configuration Options**: 
+  - `ai-provider` input for explicit provider selection (`aws`, `openrouter`, `auto`)
+  - Improved model-specific defaults (Kimi K2 Free for OpenRouter, Claude 3.7 Sonnet for AWS)
+  - Better error handling and retry logic for both providers
+- **Cost Flexibility**: Users can now choose between free OpenRouter models and premium AWS Bedrock models
 
 ### Changed
-- Updated website style to be more responsive and mobile-friendly
-- Improved website accessibility with semantic HTML and better contrast
+- **Breaking**: Default behavior now uses only Kimi K2 Free model when no configuration provided (no mixed providers)
+- Updated all documentation to reflect multi-provider capabilities
+- Enhanced README with comprehensive setup guides for both providers
+- Improved error messages with provider-specific context
+- Updated package.json description to reflect multi-provider support
+
+### Fixed
+- Fixed undefined display names for default models in model selection
+- Improved token limit handling for different model context sizes
+- Enhanced API error handling with provider-specific retry logic
+
+### Technical Details
+- Added `openrouter-client.js` with full OpenRouter API v1 compatibility
+- Added `ai-provider.js` factory pattern for provider management  
+- Added `model-selector.js` for intelligent model parsing and selection
+- Updated `bedrock-client.js` to accept configurable model parameters
+- Enhanced `index.js` with multi-provider orchestration logic
 
 ## [2.0.0] - 2025-05-10
 

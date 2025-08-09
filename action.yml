@@ -7,16 +7,27 @@ inputs:
   github-token:
     description: 'GitHub token'
     required: true
+  ai-provider:
+    description: 'AI provider to use (aws or openrouter). Auto-detected if not specified.'
+    required: false
+    default: 'auto'
   aws-access-key-id:
-    description: 'AWS Access Key ID'
-    required: true
+    description: 'AWS Access Key ID (required for AWS provider)'
+    required: false
   aws-secret-access-key:
-    description: 'AWS Secret Access Key'
-    required: true
+    description: 'AWS Secret Access Key (required for AWS provider)'
+    required: false
   aws-region:
     description: 'AWS Region'
     required: false
     default: 'us-east-1'
+  openrouter-api-key:
+    description: 'OpenRouter API Key (required for OpenRouter provider)'
+    required: false
+  models:
+    description: 'Comma-separated list of models to try in priority order. Use only OpenRouter free models OR only AWS Bedrock models - never mix providers.'
+    required: false
+    default: 'moonshotai/kimi-k2:free'
   required-label:
     description: 'Label required on PR for processing (default: claudecoder)'
     required: false

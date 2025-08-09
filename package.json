@@ -1,8 +1,8 @@
 {
   "name": "claude-coder-action",
-  "version": "1.2.0",
+  "version": "2.1.0",
   "private": false,
-  "description": "A GitHub Action to Process Pull Requests using AWS Bedrock and Claude 3.7",
+  "description": "A GitHub Action to Process Pull Requests using multiple AI providers (AWS Bedrock, OpenRouter) with intelligent model selection",
   "main": "dist/index.js",
   "scripts": {
     "build": "esbuild index.js --bundle --platform=node --target=node20 --outfile=dist/index.js",
