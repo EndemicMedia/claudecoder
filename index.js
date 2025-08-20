@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { AIProviderFactory } = require('./ai-provider');
 const { ModelSelector } = require('./model-selector');
+const { FallbackManager } = require('./fallback-manager');
 const { getRepositoryContent } = require('./utils');
 
 // Default MAX_REQUESTS is now defined through the input parameter
@@ -26,12 +27,20 @@ async function main() {
       openrouterApiKey: core.getInput('openrouter-api-key')
     };
     
-    // Parse models from input
+    // Parse models from input and setup fallback manager
     const modelsInput = core.getInput('models');
     const modelSelector = new ModelSelector(modelsInput);
+    const allModels = modelSelector.getAllModels();
     
-    // For now, just use the first model (no fallback yet)
-    const selectedModel = modelSelector.getAllModels()[0];
+    // Initialize fallback manager with all models
+    const fallbackManager = new FallbackManager(allModels, {
+      retryInterval: 5, // Check rate-limited models every 5 requests
+      rateLimitCooldown: 300000, // 5 minutes cooldown
+      maxRetries: 2 // Max retries per model before marking as failed
+    });
+    
+    // Get the current model from fallback manager
+    const selectedModel = fallbackManager.getCurrentModel();
     core.info(`Selected model: ${selectedModel.displayName}`);
     
     // Set provider based on the selected model's provider if auto-detect
@@ -49,14 +58,15 @@ async function main() {
     const requestTimeout = parseInt(core.getInput('request-timeout') || '3600000', 10);
     const requiredLabel = core.getInput('required-label') || 'claudecoder';
 
-    // Initialize AI provider with configurable options including the selected model
+    // Initialize AI provider with configurable options including fallback manager
     const aiClient = AIProviderFactory.createProvider(aiProvider, credentials, {
       maxTokens,
       enableThinking,
       thinkingBudget,
       extendedOutput,
       requestTimeout,
-      model: selectedModel.name
+      model: selectedModel.name,
+      fallbackManager // Pass fallback manager to the client
     });
 
     const context = github.context;
@@ -153,14 +163,36 @@ async function main() {
     for (const command of commands) {
       if (command.startsWith('git add')) {
         const filePath = command.split(' ').pop();
-        const contentStart = claudeResponse.indexOf('<<<EOF', claudeResponse.indexOf(command));
-        const contentEnd = claudeResponse.indexOf('EOF>>>', contentStart);
-        if (contentStart === -1 || contentEnd === -1) {
-          core.error(`Invalid content markers for file: ${filePath}`);
+        // More robust parsing - look for various EOF marker patterns
+        const eofPatterns = [
+          { start: '<<<EOF', end: 'EOF>>>', startOffset: 6 },
+          { start: '<<EOF', end: 'EOF>>', startOffset: 5 },
+          { start: '```', end: '```', startOffset: 3 }
+        ];
+        
+        let content = '';
+        let found = false;
+        
+        for (const pattern of eofPatterns) {
+          const commandIndex = claudeResponse.indexOf(command);
+          const contentStart = claudeResponse.indexOf(pattern.start, commandIndex);
+          if (contentStart !== -1) {
+            const contentEnd = claudeResponse.indexOf(pattern.end, contentStart + pattern.startOffset);
+            if (contentEnd !== -1) {
+              content = claudeResponse.slice(contentStart + pattern.startOffset, contentEnd).trim();
+              found = true;
+              break;
+            }
+          }
+        }
+        
+        if (!found) {
+          core.error(`Invalid content markers for file: ${filePath}. Expected <<<EOF...EOF>>> or similar pattern.`);
           continue;
         }
+        
         console.log('command', command);
-        const content = claudeResponse.slice(contentStart + 6, contentEnd).trim();
+        console.log('extracted content length:', content.length);
         
         if (!isLocalTest) {
           try {
