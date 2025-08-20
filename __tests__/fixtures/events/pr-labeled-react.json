@@ -1,0 +1,51 @@
+{
+  "action": "labeled",
+  "number": 2,
+  "pull_request": {
+    "number": 2,
+    "title": "Add Interactive Task Manager Dashboard",
+    "body": "Create a simple but complete Task Manager component using React and Tailwind CSS.\n\n## Requirements:\n1. Create a TaskManager.jsx component that displays a list of tasks\n2. Each task should have: title, description, priority (High/Medium/Low), and completion status\n3. Add functionality to add new tasks, mark tasks complete, and delete tasks\n4. Style with Tailwind CSS using modern, clean design\n5. Use React hooks (useState) for state management\n6. Include basic error handling\n\n## Files to create:\n- components/TaskManager.jsx - Main component with task list and form\n- components/TaskItem.jsx - Individual task component\n\nThe code should be production-ready with proper structure and styling!",
+    "state": "open",
+    "head": {
+      "ref": "feature/task-manager",
+      "sha": "def456ghi789"
+    },
+    "base": {
+      "ref": "main", 
+      "sha": "def456abc123"
+    },
+    "labels": [
+      {
+        "id": 123456789,
+        "node_id": "MDU6TGFiZWwxMjM0NTY3ODk=",
+        "url": "https://api.github.com/repos/EndemicMedia/claudecoderactiontest/labels/claudecoder",
+        "name": "claudecoder",
+        "color": "d73a4a",
+        "default": false,
+        "description": "Trigger ClaudeCoder analysis"
+      }
+    ],
+    "user": {
+      "login": "testuser",
+      "id": 987654321,
+      "type": "User"
+    }
+  },
+  "label": {
+    "id": 123456789,
+    "node_id": "MDU6TGFiZWwxMjM0NTY3ODk=",
+    "url": "https://api.github.com/repos/EndemicMedia/claudecoderactiontest/labels/claudecoder",
+    "name": "claudecoder", 
+    "color": "d73a4a",
+    "default": false,
+    "description": "Trigger ClaudeCoder analysis"
+  },
+  "repository": {
+    "name": "claudecoderactiontest",
+    "full_name": "dseeker/claudecoderactiontest",
+    "owner": {
+      "login": "dseeker",
+      "id": 12345678
+    }
+  }
+}
