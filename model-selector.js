@@ -27,10 +27,35 @@ class ModelSelector {
   parseModel(modelName) {
     // Map models to their appropriate providers
     const providerMappings = {
-      // AWS Bedrock models
-      'us.anthropic.claude-3-7-sonnet-20250219-v1:0': 'aws',
+      // AWS Bedrock models - Latest (Claude 4 series)
+      'anthropic.claude-sonnet-4-20250514-v1:0': 'aws',
+      'anthropic.claude-opus-4-20250514-v1:0': 'aws', 
+      'anthropic.claude-opus-4-1-20250805-v1:0': 'aws',
+      
+      // AWS Bedrock models - Current (Claude 3.x series)
+      'anthropic.claude-3-7-sonnet-20250219-v1:0': 'aws',
       'anthropic.claude-3-5-sonnet-20241022-v2:0': 'aws',
+      'anthropic.claude-3-5-sonnet-20240620-v1:0': 'aws',
+      'anthropic.claude-3-5-haiku-20241022-v1:0': 'aws',
+      'anthropic.claude-3-opus-20240229-v1:0': 'aws',
+      'anthropic.claude-3-sonnet-20240229-v1:0': 'aws',
       'anthropic.claude-3-haiku-20240307-v1:0': 'aws',
+      
+      // AWS Bedrock models - Complete current mappings with us. prefix
+      'us.anthropic.claude-sonnet-4-20250514-v1:0': 'aws',
+      'us.anthropic.claude-opus-4-20250514-v1:0': 'aws',
+      'us.anthropic.claude-opus-4-1-20250805-v1:0': 'aws',
+      'us.anthropic.claude-3-7-sonnet-20250219-v1:0': 'aws',
+      'us.anthropic.claude-3-5-sonnet-20241022-v2:0': 'aws',
+      'us.anthropic.claude-3-5-sonnet-20240620-v1:0': 'aws',
+      'us.anthropic.claude-3-5-haiku-20241022-v1:0': 'aws',
+      'us.anthropic.claude-3-opus-20240229-v1:0': 'aws',
+      'us.anthropic.claude-3-sonnet-20240229-v1:0': 'aws',
+      'us.anthropic.claude-3-haiku-20240307-v1:0': 'aws',
+      
+      // AWS Bedrock models - Additional model variants from AWS
+      'anthropic.claude-instant-v1': 'aws',
+      'us.anthropic.claude-instant-v1': 'aws',
       
       // OpenRouter models (default for most)
       'anthropic/claude-3.7-sonnet:beta': 'openrouter',
@@ -61,8 +86,36 @@ class ModelSelector {
   getDisplayName(modelName) {
     // Create user-friendly display names
     const displayNames = {
+      // AWS Bedrock - Latest Claude 4 series
+      'anthropic.claude-sonnet-4-20250514-v1:0': 'Claude Sonnet 4 (AWS Bedrock) - Latest',
+      'anthropic.claude-opus-4-20250514-v1:0': 'Claude Opus 4 (AWS Bedrock) - Latest',
+      'anthropic.claude-opus-4-1-20250805-v1:0': 'Claude Opus 4.1 (AWS Bedrock) - Latest',
+      'us.anthropic.claude-sonnet-4-20250514-v1:0': 'Claude Sonnet 4 (AWS US) - Latest',
+      'us.anthropic.claude-opus-4-20250514-v1:0': 'Claude Opus 4 (AWS US) - Latest',
+      'us.anthropic.claude-opus-4-1-20250805-v1:0': 'Claude Opus 4.1 (AWS US) - Latest',
+      
+      // AWS Bedrock - Current Claude 3.x series
+      'anthropic.claude-3-7-sonnet-20250219-v1:0': 'Claude 3.7 Sonnet (AWS Bedrock) - Default AWS',
+      'us.anthropic.claude-3-7-sonnet-20250219-v1:0': 'Claude 3.7 Sonnet (AWS US) - Default AWS',
+      'anthropic.claude-3-5-sonnet-20241022-v2:0': 'Claude 3.5 Sonnet v2 (AWS Bedrock)',
+      'us.anthropic.claude-3-5-sonnet-20241022-v2:0': 'Claude 3.5 Sonnet v2 (AWS US)',
+      'anthropic.claude-3-5-sonnet-20240620-v1:0': 'Claude 3.5 Sonnet (AWS Bedrock)',
+      'us.anthropic.claude-3-5-sonnet-20240620-v1:0': 'Claude 3.5 Sonnet (AWS US)',
+      'anthropic.claude-3-5-haiku-20241022-v1:0': 'Claude 3.5 Haiku (AWS Bedrock)',
+      'us.anthropic.claude-3-5-haiku-20241022-v1:0': 'Claude 3.5 Haiku (AWS US)',
+      'anthropic.claude-3-opus-20240229-v1:0': 'Claude 3 Opus (AWS Bedrock)',
+      'us.anthropic.claude-3-opus-20240229-v1:0': 'Claude 3 Opus (AWS US)',
+      'anthropic.claude-3-sonnet-20240229-v1:0': 'Claude 3 Sonnet (AWS Bedrock)',
+      'us.anthropic.claude-3-sonnet-20240229-v1:0': 'Claude 3 Sonnet (AWS US)',
+      'anthropic.claude-3-haiku-20240307-v1:0': 'Claude 3 Haiku (AWS Bedrock)',
+      'us.anthropic.claude-3-haiku-20240307-v1:0': 'Claude 3 Haiku (AWS US)',
+      
+      // AWS Bedrock - Legacy models
+      'anthropic.claude-instant-v1': 'Claude Instant (AWS Bedrock) - Legacy',
+      'us.anthropic.claude-instant-v1': 'Claude Instant (AWS US) - Legacy',
+      
+      // OpenRouter models
       'moonshotai/kimi-k2:free': 'Kimi K2 (Free) - Default OpenRouter',
-      'us.anthropic.claude-3-7-sonnet-20250219-v1:0': 'Claude 3.7 Sonnet (AWS Bedrock) - Default AWS',
       'anthropic/claude-3.7-sonnet:beta': 'Claude 3.7 Sonnet (OpenRouter)',
       'google/gemini-2.0-flash-exp:free': 'Gemini 2.0 Flash (Free)',
       'deepseek/deepseek-r1-0528:free': 'DeepSeek R1 (Free)',
