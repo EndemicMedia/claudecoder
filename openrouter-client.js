@@ -137,12 +137,26 @@ class OpenRouterClient {
         throw new Error('No valid git commands found in the response.');
       }
 
-      const lastCompleteCommand = fullResponse.lastIndexOf('git');
-      if (lastCompleteCommand === -1) {
-        throw new Error('No valid git commands found in the response.');
+      // Only truncate if we're continuing (not at the end)
+      // Find the last complete git command to continue from
+      const lines = fullResponse.split('\n');
+      let lastCompleteCommandIndex = -1;
+      
+      for (let i = lines.length - 1; i >= 0; i--) {
+        if (lines[i].trim().startsWith('git')) {
+          // Check if this command has its content block completed
+          const remainingText = lines.slice(i).join('\n');
+          if (remainingText.includes('EOF>>>') || remainingText.includes('```')) {
+            lastCompleteCommandIndex = i;
+            break;
+          }
+        }
+      }
+      
+      if (lastCompleteCommandIndex > -1) {
+        fullResponse = lines.slice(0, lastCompleteCommandIndex + 1).join('\n');
       }
 
-      fullResponse = fullResponse.substring(0, lastCompleteCommand);
       currentPrompt = `${initialPrompt}\n\nPrevious response:\n${fullResponse}\n\nPlease continue from where you left off. Remember to end your response with END_OF_SUGGESTIONS when you have no more changes to suggest.`;
     }
 

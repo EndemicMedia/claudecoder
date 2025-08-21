@@ -20,15 +20,53 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
-      - name: Run unit tests
-        run: npx jest --config=jest.config.js
-      - name: Run test coverage
+      - name: Run legacy tests
+        run: npm run test:legacy
+      - name: Run unit tests  
+        run: npm run test:unit
+      - name: Run integration tests
+        run: npm run test:integration
+      - name: Run E2E tests
+        run: npm run test:e2e
+      - name: Run comprehensive test suite
+        run: npm run test:all
+      - name: Run test coverage with thresholds
         run: npm run test:coverage
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coverage/
+
+  model-tests:
+    name: "Model Configuration Tests"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        model-config:
+          - "moonshotai/kimi-k2:free,google/gemini-2.0-flash-exp:free"
+          - "us.anthropic.claude-sonnet-4-20250514-v1:0,moonshotai/kimi-k2:free"
+          - "us.anthropic.claude-opus-4-1-20250805-v1:0,google/gemini-2.0-flash-exp:free"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm install
+      - name: Test model configuration
+        env:
+          MODELS: ${{ matrix.model-config }}
+        run: |
+          echo "Testing model configuration: $MODELS"
+          npm run test:unit -- --testNamePattern="ModelSelector|FallbackManager"
+      - name: Test authorization error handling
+        env:
+          MODELS: ${{ matrix.model-config }}
+        run: |
+          echo "Testing authorization error handling for: $MODELS"
+          npm test -- --testNamePattern="should handle authorization errors"
 
   build-test:
     name: "Build Test"

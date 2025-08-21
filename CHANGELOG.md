@@ -19,10 +19,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ModelSelector class for parsing and managing model priorities  
   - Auto-detection of provider (AWS/OpenRouter) based on model names
   - Support for mixing different model types with intelligent routing
+- **Smart Fallback System**: Automatic handling of rate limits and model failures
+  - FallbackManager class for intelligent model switching and retry logic
+  - Rate limit detection with automatic switching to next available model
+  - Periodic retry mechanism (every 5 requests) with 5-minute cooldown for rate-limited models
+  - Failure tracking with temporary model disabling after 2 consecutive failures
+  - Recovery system that resets failed models when all options are exhausted
 - **Enhanced Configuration Options**: 
   - `ai-provider` input for explicit provider selection (`aws`, `openrouter`, `auto`)
   - Improved model-specific defaults (Kimi K2 Free for OpenRouter, Claude 3.7 Sonnet for AWS)
   - Better error handling and retry logic for both providers
+  - Comprehensive logging and debugging for fallback behavior
 - **Cost Flexibility**: Users can now choose between free OpenRouter models and premium AWS Bedrock models
 
 ### Changed
@@ -38,11 +45,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced API error handling with provider-specific retry logic
 
 ### Technical Details
-- Added `openrouter-client.js` with full OpenRouter API v1 compatibility
+- Added `openrouter-client.js` with full OpenRouter API v1 compatibility and fallback integration
 - Added `ai-provider.js` factory pattern for provider management  
 - Added `model-selector.js` for intelligent model parsing and selection
+- Added `fallback-manager.js` with sophisticated rate limiting and failure handling
 - Updated `bedrock-client.js` to accept configurable model parameters
-- Enhanced `index.js` with multi-provider orchestration logic
+- Enhanced `index.js` with multi-provider orchestration and fallback system integration
+- Comprehensive test suite for fallback scenarios with real-world simulation
 
 ## [2.0.0] - 2025-05-10
 

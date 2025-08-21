@@ -1,0 +1,51 @@
+{
+  "action": "labeled",
+  "number": 1,
+  "pull_request": {
+    "number": 1,
+    "title": "Test PR for ClaudeCoder",
+    "body": "Please improve the test-example.js file by: 1) Adding proper error handling for division by zero, 2) Converting to modern ES6 class syntax, 3) Adding input validation, 4) Improving the code structure and readability. Make it production-ready!",
+    "state": "open",
+    "head": {
+      "ref": "feature/test-branch",
+      "sha": "abc123def456"
+    },
+    "base": {
+      "ref": "main",
+      "sha": "def456abc123"
+    },
+    "labels": [
+      {
+        "id": 123456789,
+        "node_id": "MDU6TGFiZWwxMjM0NTY3ODk=",
+        "url": "https://api.github.com/repos/EndemicMedia/claudecoderactiontest/labels/claudecoder",
+        "name": "claudecoder",
+        "color": "d73a4a",
+        "default": false,
+        "description": "Trigger ClaudeCoder analysis"
+      }
+    ],
+    "user": {
+      "login": "testuser",
+      "id": 987654321,
+      "type": "User"
+    }
+  },
+  "label": {
+    "id": 123456789,
+    "node_id": "MDU6TGFiZWwxMjM0NTY3ODk=",
+    "url": "https://api.github.com/repos/EndemicMedia/claudecoderactiontest/labels/claudecoder",
+    "name": "claudecoder",
+    "color": "d73a4a",
+    "default": false,
+    "description": "Trigger ClaudeCoder analysis"
+  },
+  "repository": {
+    "name": "claudecoderactiontest",
+    "full_name": "dseeker/claudecoderactiontest",
+    "owner": {
+      "login": "dseeker",
+      "id": 12345678
+    }
+  }
+}
