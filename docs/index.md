@@ -138,6 +138,22 @@ description: Automatically process pull requests using AWS Bedrock and Claude 3.
   <p><a href="/claudecoder/readme/" class="btn primary">View Full Documentation</a></p>
 </div>
 
+## Documentation
+
+### 📚 Core Documentation
+- [README](../README.md) - Getting started guide
+- [CONTRIBUTING](../CONTRIBUTING.md) - How to contribute
+- [ROADMAP](../ROADMAP.md) - Feature roadmap and progress
+
+### 🔧 Development
+- [Development Guide](development/README.md) - Complete development setup, local usage, and contribution guidelines
+
+### 🧪 Testing
+- [Testing & Quality Assurance](testing/README.md) - Comprehensive testing strategy, coverage, and quality gates
+
+### ⚙️ Implementation
+- [Technical Implementation](implementation/README.md) - Architecture, tokenization system, and technical details
+
 <div class="testimonials-section">
   <h2>Support the Future of Dev Productivity</h2>
 

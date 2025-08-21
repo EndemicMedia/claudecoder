@@ -16,7 +16,7 @@
     "test:all": "npm run test:legacy && npm run test:unit && npm run test:integration && npm run test:e2e",
     "test:real-api": "npm run test:e2e -- --testNamePattern='Real API Integration'",
     "test:openrouter": "npm run test:e2e -- --testNamePattern='OpenRouter'",
-    "test:bedrock": "npm run test:e2e -- --testNamePattern='AWS Bedrock'", 
+    "test:bedrock": "npm run test:e2e -- --testNamePattern='AWS Bedrock'",
     "test:cross-provider": "npm run test:e2e -- --testNamePattern='cross-provider'",
     "test:act": "act --job process-pr --secret-file .env --eventpath __tests__/fixtures/events/pr-labeled-basic.json",
     "test:act-react": "act --job process-pr --secret-file .env --eventpath __tests__/fixtures/events/pr-labeled-react.json",
@@ -36,7 +36,9 @@
     "@aws-sdk/client-bedrock-runtime": "3.614.0",
     "@octokit/rest": "^19.0.13",
     "axios": "^1.7.2",
-    "ignore": "^5.2.4"
+    "gpt-tokenizer": "^3.0.1",
+    "ignore": "^5.2.4",
+    "tiktoken": "^1.0.22"
   },
   "devDependencies": {
     "@semantic-release/git": "^10.0.1",

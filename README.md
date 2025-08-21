@@ -34,7 +34,22 @@
 
 ## Overview
 
-ClaudeCoderAction is a GitHub Action that automates code changes in your pull requests, offering a choice between **premium Claude models** and a wide range of other AI models. Get started for free with models from OpenRouter, or unlock the full potential of AI-powered coding with Claude via AWS Bedrock. ClaudeCoderAction analyzes your repository content and pull request descriptions to provide intelligent code suggestions, enhancing your development workflow.
+ClaudeCoderAction is a powerful AI-powered coding assistant that works in two ways:
+
+1. **GitHub Actions Integration**: Automates code changes directly in your pull requests
+2. **Local Usage**: Run AI-powered code changes on any local git repository
+
+Choose between **premium Claude models** and a wide range of other AI models. Get started for free with models from OpenRouter, or unlock the full potential of AI-powered coding with Claude via AWS Bedrock.
+
+### 🖥️ Local Usage (New!)
+
+Run ClaudeCoder directly on your local repositories without needing GitHub Actions:
+
+```bash
+node local-claudecoder.js "Add error handling to the login function" ~/my-project
+```
+
+**[📖 See Local Usage Guide](LOCAL_USAGE.md)** for complete setup and usage instructions.
 
 <!-- Removed button links -->
 
